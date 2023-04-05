@@ -1,6 +1,10 @@
 @import url(https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap);
 html {
   scroll-behavior: smooth;
+  --bg-color1: #1976D2;
+  --bg-color2: #2196F3;
+  --bg-image: linear-gradient(45deg, var(--bg-color1) 0%, var(--bg-color2) 100%);
+  --bg-image-webkit: -webkit-linear-gradient(45deg, var(--bg-color1) 0%, var(--bg-color2) 100%);
 }
 body {
   font-family: "Nunito", sans-serif;
@@ -176,12 +180,12 @@ textarea::placeholder {
 }
 input:focus,
 textarea:focus {
-  border-color: #de5088;
+  border-color: var(--bg-color1);
 }
 .back-to-top {
   width: 45px;
   height: 45px;
-  background: #de5088;
+  background: var(--bg-color1);
   text-align: center;
   line-height: 45px;
   font-size: 20px;
@@ -224,24 +228,8 @@ textarea:focus {
   z-index: 5;
   -webkit-transition: all 0.4s ease-out 0s;
   transition: all 0.4s ease-out 0s;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#dc4985),
-    color-stop(#e25c8b),
-    color-stop(#e86d92),
-    color-stop(#ed7d9a),
-    to(#f18da2)
-  );
-  background-image: linear-gradient(
-    to bottom,
-    #dc4985,
-    #e25c8b,
-    #e86d92,
-    #ed7d9a,
-    #f18da2
-  );
+  -webkit-background-image: var(--bg-image-webkit);
+  background-image: var(--bg-image);
 }
 .main-btn:hover {
   color: #fff;
@@ -357,7 +345,7 @@ textarea:focus {
   width: 200%;
   height: 100%;
   border-style: solid;
-  border-color: #de5088 #de5088 #f9f9f9;
+  border-color: var(--bg-color1) var(--bg-color1) #f9f9f9;
   border-radius: 50%;
   border-width: 6px;
 }
@@ -1170,7 +1158,7 @@ textarea:focus {
 }
 .navbar-nav .nav-item a.active,
 .navbar-nav .nav-item a:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .sticky .navbar-toggler .toggler-icon {
   background-color: #505478;
@@ -1179,11 +1167,11 @@ textarea:focus {
   color: #505478;
 }
 .sticky .navbar-nav .nav-item a::before {
-  background-color: #de5088;
+  background-color: var(--bg-color1);
 }
 .sticky .navbar-nav .nav-item a.active,
 .sticky .navbar-nav .nav-item a:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .hero-area {
   padding-top: 160px;
@@ -1280,7 +1268,7 @@ textarea:focus {
   transition: all 0.3s ease-out 0s;
 }
 .hero-area .hero-content .hero-btns .watch-btn span:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .hero-area .hero-content .hero-btns .watch-btn span {
@@ -1602,7 +1590,7 @@ textarea:focus {
   white-space: normal;
   -webkit-transition: all 0.3s ease-out 0s;
   transition: all 0.3s ease-out 0s;
-  color: #de5088;
+  color: var(--bg-color1);
   width: 100%;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -1629,7 +1617,7 @@ textarea:focus {
   color: #505478;
 }
 .accordion-style .single-accordion .accordion-btn button:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .accordion-style .single-accordion .accordion-btn button.collapsed::after {
   -webkit-transform: rotate(0deg) translateY(-50%);
@@ -1878,7 +1866,7 @@ textarea:focus {
   padding: 10px;
 }
 .testimonial-slider-wrapper .tns-controls button:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .pricing-area .single-price {
   border-radius: 10px;
@@ -1898,7 +1886,7 @@ textarea:focus {
   font-weight: 600;
 }
 .pricing-area .single-price .package-price {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .pricing-area .single-price .package-details {
   margin-bottom: 30px;
@@ -2042,7 +2030,7 @@ textarea:focus {
   color: #505478;
 }
 .download-area .download-wrapper .download-content .download-btns a:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .download-area
   .download-wrapper
@@ -2102,7 +2090,7 @@ textarea:focus {
   line-height: 32px;
 }
 .footer-area .footer-widget ul li a:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
 .footer-area .footer-widget .social-links {
   display: -webkit-box;
@@ -2193,5 +2181,5 @@ textarea:focus {
   transition: all 0.3s ease-out 0s;
 }
 .footer-area .footer-cradit p a:hover {
-  color: #de5088;
+  color: var(--bg-color1);
 }
