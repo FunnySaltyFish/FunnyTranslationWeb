@@ -7,14 +7,7 @@
   <title>译站 Transtation | 专业级全场景翻译工作台</title>
   <meta name="description" content="把多引擎、大模型与全场景翻译整合进同一个工作台。支持长文、图片、语音、漫画与悬浮窗翻译。" />
 
-  <!-- Fonts: Inter for Body, Noto Serif SC for Display (Simulating Waldenburg 300) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Serif+SC:wght@300;700&display=swap"
-    rel="stylesheet" />
-
-  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <!-- No runtime font/CDN dependency. Keep the original type direction with local/system fonts. -->
   <style>
     /* 
   Design System: ElevenLabs Minimalist & Warm Theme
@@ -23,6 +16,7 @@
 
     :root[data-theme="light"] {
       --bg-primary: #ffffff;
+      --bg-primary-rgb: 255, 255, 255;
       --bg-secondary: #f5f5f5;
       --bg-warm: rgba(245, 242, 239, 0.8);
 
@@ -42,6 +36,7 @@
 
     :root[data-theme="dark"] {
       --bg-primary: #121110;
+      --bg-primary-rgb: 18, 17, 16;
       --bg-secondary: #1a1918;
       --bg-warm: rgba(45, 42, 39, 0.8);
 
@@ -65,7 +60,7 @@
     }
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
       background-color: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.5;
@@ -89,7 +84,7 @@
     .section-title,
     .card-title {
       /* Using Noto Serif SC 300 to mimic Waldenburg's whisper-thin elegant look */
-      font-family: 'Noto Serif SC', 'Songti SC', serif;
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
       font-weight: 300;
       color: var(--text-primary);
     }
@@ -186,7 +181,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-family: 'Inter', sans-serif;
+      font-family: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
       font-weight: 500;
       font-size: 0.94rem;
       border: none;
@@ -221,7 +216,7 @@
       /* Slight asymmetric padding */
       border-radius: 30px;
       box-shadow: var(--shadow-warm);
-      font-family: 'Noto Serif SC', serif;
+      font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
       /* Special touch */
       font-weight: 700;
     }
@@ -256,7 +251,7 @@
     }
 
     .brand-name {
-      font-family: 'Inter', sans-serif;
+      font-family: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
       font-weight: 700;
       font-size: 1.1rem;
       letter-spacing: 0.5px;
@@ -293,9 +288,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Inter', sans-serif;
+      font-family: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
       font-size: 0.875rem;
       font-weight: 500;
+    }
+
+    .icon-btn svg {
+      display: block;
     }
 
     .icon-btn:hover {
@@ -317,7 +316,7 @@
 
     .hero-container {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: minmax(0, 1.18fr) minmax(260px, 0.82fr);
       gap: 64px;
       align-items: center;
     }
@@ -368,11 +367,18 @@
       border: 1px solid var(--border-light);
     }
 
-    .media-frame video {
+    .hero-media {
+      justify-self: end;
+      width: min(100%, 390px);
+    }
+
+    .media-frame video,
+    .media-frame img {
       width: 100%;
+      max-height: min(58vh, 520px);
       height: auto;
-      aspect-ratio: 16/9;
-      object-fit: cover;
+      object-fit: contain;
+      background-color: var(--bg-secondary);
     }
 
     /* Bento Grid */
@@ -407,14 +413,64 @@
       background-color: var(--bg-secondary);
       min-height: 240px;
       overflow: hidden;
+      display: grid;
+      place-items: center;
     }
 
     .card-media img,
     .card-media video {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      max-height: 440px;
+      object-fit: contain;
       object-position: top;
+    }
+
+    .video-trigger {
+      position: relative;
+      display: grid;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      place-items: center;
+      border: 0;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .video-trigger img {
+      width: 100%;
+      height: auto;
+      max-height: 440px;
+      object-fit: contain;
+      object-position: top;
+    }
+
+    .play-pill {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 9999px;
+      background-color: rgba(var(--bg-primary-rgb), 0.88);
+      box-shadow: var(--shadow-outline);
+      transform: translateX(-50%);
+      font-size: 0.81rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .play-pill::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid currentColor;
     }
 
     /* Scenarios Gallery */
@@ -432,8 +488,10 @@
     .gallery-grid video,
     .gallery-grid img {
       width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: cover;
+      height: auto;
+      max-height: 360px;
+      object-fit: contain;
+      background-color: var(--bg-secondary);
     }
 
     .card-footer {
@@ -506,10 +564,33 @@
 
     .price {
       font-size: 3rem;
-      font-family: 'Inter', sans-serif;
+      font-family: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
       font-weight: 500;
       letter-spacing: -0.05em;
       margin: 16px 0 8px;
+    }
+
+    /* Download */
+    .download-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .download-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .download-card {
+      padding: 32px 24px;
+      gap: 18px;
+    }
+
+    .download-card .btn {
+      margin-top: 8px;
     }
 
     /* Footer */
@@ -531,8 +612,14 @@
 
       .hero-container,
       .bento-large,
-      .pricing-layout {
+      .pricing-layout,
+      .download-layout {
         grid-template-columns: 1fr;
+      }
+
+      .hero-media {
+        justify-self: center;
+        width: min(100%, 360px);
       }
 
       .hero-copy {
@@ -557,6 +644,25 @@
         /* In real implementation, show mobile menu */
       }
 
+      .site-header[data-menu-open="true"] .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 24px;
+        right: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px;
+        border: 1px solid var(--border-light);
+        border-radius: 16px;
+        background-color: var(--bg-primary);
+        box-shadow: var(--shadow-outline);
+      }
+
+      .site-header[data-menu-open="true"] .main-nav a {
+        padding: 12px 14px;
+      }
+
       .mobile-menu-btn {
         display: block;
       }
@@ -572,8 +678,17 @@
       }
 
       .gallery-grid,
-      .pricing-cards {
+      .pricing-cards,
+      .download-cards {
         grid-template-columns: 1fr;
+      }
+
+      .container {
+        width: min(100% - 32px, 1200px);
+      }
+
+      .hero {
+        padding: 80px 0 64px;
       }
 
       .footer-inner {
@@ -603,6 +718,7 @@
         <a href="#features">工作流</a>
         <a href="#scenarios">场景</a>
         <a href="#proof">评价</a>
+        <a href="#download">下载</a>
         <a href="#pricing">权益</a>
       </nav>
 
@@ -650,9 +766,7 @@
 
         <div class="hero-media">
           <div class="media-frame shadow-card">
-            <video autoplay loop muted playsinline poster="assets/showcase/长文翻译演示封面.png">
-              <source src="assets/showcase/主翻译结果演示视频_batch.mp4" type="video/mp4" />
-            </video>
+            <img src="assets/showcase/主页.jpg" alt="译站主页预览">
           </div>
         </div>
       </div>
@@ -685,9 +799,10 @@
               <p class="body-standard text-muted">看网页、玩游戏无需切出。框选即译，直接贴合当前操作流。</p>
             </div>
             <div class="card-media">
-              <video autoplay loop muted playsinline poster="assets/showcase/悬浮窗屏幕翻译框选区域大模型结果.jpg">
-                <source src="assets/showcase/悬浮窗文本翻译演示视频_batch.mp4" type="video/mp4" />
-              </video>
+              <button class="video-trigger" type="button" data-video="assets/showcase/悬浮窗文本翻译演示视频_batch.mp4">
+                <img src="assets/showcase/悬浮窗屏幕翻译框选区域大模型结果.jpg" alt="悬浮窗实时翻译预览">
+                <span class="play-pill">播放演示</span>
+              </button>
             </div>
           </article>
 
@@ -698,9 +813,10 @@
               <p class="body-standard text-muted">长文翻译自动关联上下文，提取专业术语，保持全篇风格高度统一。</p>
             </div>
             <div class="card-media">
-              <video autoplay loop muted playsinline poster="assets/showcase/长文翻译演示封面.png">
-                <source src="assets/showcase/长文翻译翻译演示_batch.mp4" type="video/mp4" />
-              </video>
+              <button class="video-trigger" type="button" data-video="assets/showcase/长文翻译翻译演示_batch.mp4">
+                <img src="assets/showcase/长文翻译过程中.jpg" alt="长文翻译预览">
+                <span class="play-pill">播放演示</span>
+              </button>
             </div>
           </article>
         </div>
@@ -717,18 +833,20 @@
 
         <div class="gallery-grid">
           <div class="card shadow-outline">
-            <video autoplay loop muted playsinline poster="assets/showcase/本地模型图片翻译演示.jpg">
-              <source src="assets/showcase/图片翻译演示视频_batch.mp4" type="video/mp4" />
-            </video>
+            <button class="video-trigger" type="button" data-video="assets/showcase/图片翻译演示视频_batch.mp4">
+              <img src="assets/showcase/本地模型图片翻译演示.jpg" alt="图片翻译预览">
+              <span class="play-pill">播放演示</span>
+            </button>
             <div class="card-footer">
               <span class="caption">图片翻译与复杂版式还原</span>
             </div>
           </div>
 
           <div class="card shadow-outline">
-            <video autoplay loop muted playsinline poster="assets/showcase/漫画翻译演示.jpg">
-              <source src="assets/showcase/漫画翻译效果演示视频_batch.mp4" type="video/mp4" />
-            </video>
+            <button class="video-trigger" type="button" data-video="assets/showcase/漫画翻译效果演示视频_batch.mp4">
+              <img src="assets/showcase/漫画翻译演示.jpg" alt="漫画翻译预览">
+              <span class="play-pill">播放演示</span>
+            </button>
             <div class="card-footer">
               <span class="caption">漫画一键翻译、嵌字与上色</span>
             </div>
@@ -742,9 +860,10 @@
           </div>
 
           <div class="card shadow-outline">
-            <video autoplay loop muted playsinline poster="assets/showcase/悬浮窗屏幕翻译控制页.jpg">
-              <source src="assets/showcase/实时语音翻译演示视频_batch.mp4" type="video/mp4" />
-            </video>
+            <button class="video-trigger" type="button" data-video="assets/showcase/实时语音翻译演示视频_batch.mp4">
+              <img src="assets/showcase/悬浮窗屏幕翻译控制页.jpg" alt="实时语音翻译预览">
+              <span class="play-pill">播放演示</span>
+            </button>
             <div class="card-footer">
               <span class="caption">语音识别、实时纠错与自然朗读</span>
             </div>
@@ -820,6 +939,43 @@
         </div>
       </div>
     </section>
+
+    <!-- Download -->
+    <section id="download" class="section bg-light">
+      <div class="container">
+        <div class="download-layout">
+          <div class="download-content">
+            <span class="tag-warm">官方下载</span>
+            <h2 class="section-title">选择你的工作台。</h2>
+            <p class="body-standard text-muted">
+              Android 适合移动阅读、悬浮窗与图片翻译；Windows 桌面端适合长文、文档与高频工作流。两个入口都直接获取最新版。
+            </p>
+          </div>
+
+          <div class="download-cards">
+            <div class="card download-card shadow-outline">
+              <span class="tag">Android APK</span>
+              <h3 class="card-title">移动端</h3>
+              <p class="caption text-muted">适合手机、平板和随时打开的跨语言阅读。</p>
+              <a class="btn btn-black full-width"
+                href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest">
+                下载 Android 版
+              </a>
+            </div>
+
+            <div class="card download-card shadow-warm">
+              <span class="tag-warm">Windows Desktop</span>
+              <h3 class="card-title">桌面端</h3>
+              <p class="caption text-muted">适合长文、说明书、术语库与桌面翻译流程。</p>
+              <a class="btn btn-warm full-width"
+                href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest&platform=desktop">
+                下载 Windows 版
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer bg-light">
@@ -849,34 +1005,150 @@
       } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         root.setAttribute('data-theme', 'dark');
       }
+      updateThemeIcon(root.getAttribute('data-theme'));
+
+      function updateThemeIcon(theme) {
+        const icon = themeToggleBtn.querySelector('svg');
+        if (!icon) return;
+        if (theme === 'dark') {
+          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        } else {
+          icon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+        }
+      }
 
       themeToggleBtn.addEventListener('click', () => {
         const currentTheme = root.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         root.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-
-        // Optional: Switch icon logic based on theme
-        const icon = themeToggleBtn.querySelector('svg');
-        if (newTheme === 'dark') {
-          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-        } else {
-          icon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
-        }
+        updateThemeIcon(newTheme);
       });
 
-      // Language Toggle Placeholder
+      // Language Toggle
       const langToggleBtn = document.getElementById('lang-toggle');
+      const zhToEn = {
+        '工作流': 'Workflow',
+        '场景': 'Scenarios',
+        '评价': 'Reviews',
+        '下载': 'Download',
+        '权益': 'Plans',
+        '获取应用': 'Get App',
+        '把每一种翻译，': 'Put every kind of translation,',
+        '放进同一个工作台。': 'inside one workspace.',
+        '基础引擎永久免费。一次输入，同屏对照多重结果。从一行代码、一张外语图片，到一本数万字的专业手册，让每一次跨语言阅读都准确、自然、不被打断。': 'Core engines are free forever. Type once and compare multiple results side by side. From a line of code or a foreign-language image to a professional manual, every cross-language reading flow stays accurate, natural, and uninterrupted.',
+        '免费下载体验': 'Download for free',
+        '查看开源代码': 'View source code',
+        '30,000+ 累计下载': '30,000+ downloads',
+        '40+ 翻译引擎接入': '40+ engines integrated',
+        '支持完全离线运行': 'Fully offline supported',
+        '不止于查词，而是完整的阅读流。': 'More than lookup. A complete reading flow.',
+        '所有的能力都是为了同一个目的：让你在当前场景下，用最少的操作得到最准确的意思。': 'Every capability serves one goal: get the most accurate meaning in the current context with the fewest actions.',
+        '多引擎与大模型同屏对照': 'Multi-engine and LLM comparison',
+        '不要猜测，直接比较。Bing、Google 等基础引擎快速出词，20+ 顶级大模型提供专业润色，优劣一眼便知。': 'Do not guess. Compare directly. Base engines return fast results, while 20+ leading LLMs provide polished professional alternatives.',
+        '悬浮窗实时翻译': 'Floating real-time translation',
+        '看网页、玩游戏无需切出。框选即译，直接贴合当前操作流。': 'Read web pages or play games without switching apps. Select an area and translate inside the current flow.',
+        '整本文档与术语库': 'Full documents and terminology',
+        '长文翻译自动关联上下文，提取专业术语，保持全篇风格高度统一。': 'Long-form translation keeps context connected, extracts terminology, and maintains consistent style across the whole text.',
+        '处理复杂介质，举重若轻。': 'Handle difficult media with a light touch.',
+        '无论是扫描件、竖排古文、未经整理的播客录音，还是未汉化的漫画，都能被优雅地解析、翻译并还原。': 'Scans, vertical classical text, raw podcast audio, and untranslated comics can all be parsed, translated, and restored with care.',
+        '图片翻译与复杂版式还原': 'Image translation and layout restoration',
+        '漫画一键翻译、嵌字与上色': 'Comic translation, lettering, and coloring',
+        '高难度语境上下文理解': 'High-context semantic understanding',
+        '语音识别、实时纠错与自然朗读': 'Speech recognition, correction, and reading',
+        '被专业用户信任。': 'Trusted by professional users.',
+        '"最有价值的不是模型数量，而是能在一个界面里快速对照多个结果。术语、语气、例句一眼就能判断，效率极高。"': '"The real value is comparing multiple results in one interface. Terminology, tone, and examples are clear at a glance."',
+        '本地化项目经理': 'Localization project manager',
+        '长期用户反馈': 'Long-term user feedback',
+        '"长文翻译能连续保留上下文，还能顺手整理术语表。做说明书和小说片段时，比传统复制粘贴式流程稳定很多。"': '"Long-form translation keeps context and can organize terminology along the way. It is much more stable than copy-paste workflows."',
+        '独立译者': 'Independent translator',
+        '长文场景反馈': 'Long-form scenario feedback',
+        '"它支持本地大模型离线运行。在处理敏感的内部技术文档时，这是我们唯一敢放心使用的工具。"': '"It supports local LLMs offline. For sensitive internal technical documents, this is the tool we feel safe using."',
+        '软件开发工程师': 'Software engineer',
+        '开源社区反馈': 'Open-source community feedback',
+        '先免费使用，再按需扩展。': 'Start free, then expand as needed.',
+        '我们希望你能在没有任何压力的情况下体验核心功能。基础引擎完全免费、不限量。当你需要重度使用大模型、批量处理图片时，再选择极具性价比的会员方案。': 'Core features can be tried without pressure. Base engines are free and unlimited. When you need heavy LLM usage or batch image processing, choose a cost-effective membership plan.',
+        '基础翻译引擎永久免费。': 'Base translation engines are free forever.',
+        '非会员每月赠送 30 张高级图片翻译额度。': 'Non-members receive 30 advanced image translations every month.',
+        '开源透明，支持本地离线部署运行。': 'Open-source and transparent, with local offline deployment supported.',
+        '会员享受 AI 点数最高 8 折优惠。': 'Members get up to 20% off AI points.',
+        '免费体验': 'Free trial',
+        '¥0': '¥0',
+        '/月': '/mo',
+        '适合日常查词与轻度用户': 'For daily lookup and light users',
+        '立即下载': 'Download now',
+        '专业年卡': 'Pro annual',
+        '¥49.99': '¥49.99',
+        '/年': '/yr',
+        '适合重度长文、图片及 AI 工作流': 'For heavy long-form, image, and AI workflows',
+        '官方下载': 'Official Download',
+        '选择你的工作台。': 'Choose your workspace.',
+        'Android 适合移动阅读、悬浮窗与图片翻译；Windows 桌面端适合长文、文档与高频工作流。两个入口都直接获取最新版。': 'Android is for mobile reading, floating-window translation, and image translation. Windows desktop is for long-form text, documents, and frequent workflows. Both links fetch the latest version directly.',
+        '移动端': 'Mobile',
+        '适合手机、平板和随时打开的跨语言阅读。': 'For phones, tablets, and always-available cross-language reading.',
+        '下载 Android 版': 'Download Android',
+        '桌面端': 'Desktop',
+        '适合长文、说明书、术语库与桌面翻译流程。': 'For long-form text, manuals, terminology, and desktop workflows.',
+        '下载 Windows 版': 'Download Windows',
+        '由 FunnySaltyFish 持续维护。开源、透明、专注。': 'Maintained by FunnySaltyFish. Open, transparent, and focused.',
+        'QQ 群': 'QQ Group',
+        '隐私政策': 'Privacy',
+        '播放演示': 'Play demo'
+      };
+      const enToZh = Object.fromEntries(Object.entries(zhToEn).map(([zh, en]) => [en, zh]));
+
+      function translateText(targetLang) {
+        const map = targetLang === 'en' ? zhToEn : enToZh;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach((node) => {
+          const original = node.nodeValue;
+          const trimmed = original.trim();
+          if (!map[trimmed]) return;
+          node.nodeValue = original.replace(trimmed, map[trimmed]);
+        });
+        root.setAttribute('lang', targetLang === 'en' ? 'en' : 'zh-CN');
+        langToggleBtn.textContent = targetLang === 'en' ? 'ZH' : 'EN';
+        localStorage.setItem('lang', targetLang);
+      }
+
+      translateText(localStorage.getItem('lang') || 'zh');
+
       langToggleBtn.addEventListener('click', () => {
-        const currentLang = root.getAttribute('lang');
-        if (currentLang === 'zh-CN') {
-          root.setAttribute('lang', 'en');
-          langToggleBtn.textContent = 'ZH';
-          // Implement translation logic here
-        } else {
-          root.setAttribute('lang', 'zh-CN');
-          langToggleBtn.textContent = 'EN';
-        }
+        translateText(root.getAttribute('lang') === 'zh-CN' ? 'en' : 'zh');
+      });
+
+      // Mobile navigation
+      const header = document.querySelector('.site-header');
+      const menuToggleBtn = document.querySelector('.mobile-menu-btn');
+      if (menuToggleBtn) {
+        menuToggleBtn.addEventListener('click', () => {
+          const isOpen = header.getAttribute('data-menu-open') === 'true';
+          header.setAttribute('data-menu-open', String(!isOpen));
+        });
+      }
+
+      document.querySelectorAll('.main-nav a').forEach((link) => {
+        link.addEventListener('click', () => {
+          header.setAttribute('data-menu-open', 'false');
+        });
+      });
+
+      document.querySelectorAll('.video-trigger').forEach((button) => {
+        button.addEventListener('click', () => {
+          const src = button.getAttribute('data-video');
+          const poster = button.querySelector('img')?.getAttribute('src') || '';
+          const video = document.createElement('video');
+          video.controls = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          video.preload = 'auto';
+          if (poster) video.poster = poster;
+          video.innerHTML = `<source src="${src}" type="video/mp4" />`;
+          button.replaceWith(video);
+          video.focus();
+        });
       });
 
       // Smooth Scroll for Anchor Links
