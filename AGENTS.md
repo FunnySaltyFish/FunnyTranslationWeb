@@ -14,7 +14,7 @@
 
 ## 素材使用
 
-- 产品截图和视频优先使用 `assets/showcase/`。除非明确要求，忽略 `assets/images`、`assets/css`、`assets/js`、`assets/fonts` 等旧资源。
+- 产品截图和视频位于 `assets/showcase/`。由 GPT-Image-2 生成的位于 `assets/generated`
 - 不要为了“尽量用上素材”而把大量截图堆成图库。图片应该出现在对应功能说明旁边，用来解释具体功能。
 - 产品视觉必须符合真实 App。不要生成或插入虚构 UI，避免造成虚假宣传。
 - 生成首屏图时，应基于真实产品截图或克制文字排版，并匹配页面白色、暖灰、黑字的视觉语言。
