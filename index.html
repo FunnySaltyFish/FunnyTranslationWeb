@@ -1,2146 +1,902 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>译站 Transtation | 多引擎同屏翻译、AI 长文翻译、图片语音漫画翻译工具</title>
-  <meta name="description"
-    content="译站 Transtation 是一款面向日常用户与专业场景的一站式翻译应用，支持 40+ 翻译引擎、20+ 大模型、长文翻译、图片翻译、语音翻译、漫画翻译、悬浮窗屏幕翻译与本地离线模型。" />
-  <meta name="keywords"
-    content="译站,Transtation,翻译软件,AI翻译,多引擎翻译,长文翻译,图片翻译,语音翻译,漫画翻译,屏幕翻译,离线翻译,本地大模型翻译" />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#eef2ff" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="译站 Transtation | 把多引擎、AI 与全场景翻译整合进同一个工作台" />
-  <meta property="og:description"
-    content="基础引擎免费不限量，AI 长文、图片、语音、漫画、悬浮窗翻译一站完成。开源可信，支持 Android、Windows 与 Google Play 下载。" />
-  <meta property="og:image" content="assets/showcase/主页.jpg" />
-  <meta property="og:locale" content="zh_CN" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="译站 Transtation" />
-  <meta name="twitter:description" content="多引擎同屏翻译、AI 长文翻译、图片语音漫画翻译，一站式完成。" />
-  <link rel="icon" href="assets/images/favicon.png" type="image/png" />
+  <title>译站 Transtation | 专业级全场景翻译工作台</title>
+  <meta name="description" content="把多引擎、大模型与全场景翻译整合进同一个工作台。支持长文、图片、语音、漫画与悬浮窗翻译。" />
+
+  <!-- Fonts: Inter for Body, Noto Serif SC for Display (Simulating Waldenburg 300) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=Noto+Serif+SC:wght@700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Serif+SC:wght@300;700&display=swap"
     rel="stylesheet" />
+
+  <!-- <link rel="stylesheet" href="style.css" /> -->
   <style>
-    :root {
-      --bg: #f4f1eb;
-      --bg-soft: #fbfaf7;
-      --surface: rgba(255, 255, 255, 0.84);
-      --surface-strong: rgba(255, 255, 255, 0.94);
-      --ink: #13203a;
-      --ink-soft: #41506c;
-      --line: rgba(19, 32, 58, 0.1);
-      --line-strong: rgba(19, 32, 58, 0.16);
-      --accent: #2351ff;
-      --accent-deep: #1733a4;
-      --accent-soft: #dce6ff;
-      --teal: #0a8f8a;
-      --warm: #f2b84b;
-      --shadow: 0 22px 70px rgba(24, 35, 63, 0.12);
-      --shadow-soft: 0 16px 42px rgba(24, 35, 63, 0.08);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --container: 1180px;
-      --header-h: 84px;
+    /* 
+  Design System: ElevenLabs Minimalist & Warm Theme
+  Emphasis on whisper-thin typography, extreme whitespace, and sub-0.1 opacity shadows.
+*/
+
+    :root[data-theme="light"] {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --bg-warm: rgba(245, 242, 239, 0.8);
+
+      --text-primary: #000000;
+      --text-secondary: #4e4e4e;
+      --text-muted: #777169;
+
+      --border-light: #e5e5e5;
+      --border-subtle: rgba(0, 0, 0, 0.05);
+
+      /* ElevenLabs Signature Multi-layer Shadows */
+      --shadow-inset: rgba(0, 0, 0, 0.075) 0px 0px 0px 0.5px inset, #fff 0px 0px 0px 0px inset;
+      --shadow-outline: rgba(0, 0, 0, 0.06) 0px 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 2px 4px;
+      --shadow-card: rgba(0, 0, 0, 0.4) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 4px;
+      --shadow-warm: rgba(78, 50, 23, 0.04) 0px 6px 16px;
+    }
+
+    :root[data-theme="dark"] {
+      --bg-primary: #121110;
+      --bg-secondary: #1a1918;
+      --bg-warm: rgba(45, 42, 39, 0.8);
+
+      --text-primary: #ffffff;
+      --text-secondary: #b3b0ad;
+      --text-muted: #8c8885;
+
+      --border-light: #33312f;
+      --border-subtle: rgba(255, 255, 255, 0.05);
+
+      --shadow-inset: rgba(255, 255, 255, 0.075) 0px 0px 0px 0.5px inset, transparent 0px 0px 0px 0px inset;
+      --shadow-outline: rgba(255, 255, 255, 0.06) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 2px 8px;
+      --shadow-card: rgba(255, 255, 255, 0.1) 0px 0px 1px, rgba(0, 0, 0, 0.4) 0px 4px 12px;
+      --shadow-warm: rgba(180, 130, 80, 0.06) 0px 6px 16px;
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--header-h) + 18px);
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(78, 120, 255, 0.14), transparent 28%),
-        radial-gradient(circle at 88% 14%, rgba(10, 143, 138, 0.10), transparent 24%),
-        linear-gradient(180deg, #f6f3ee 0%, #f1efe8 48%, #faf9f5 100%);
-      color: var(--ink);
-      line-height: 1.7;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     img,
     video {
-      display: block;
       max-width: 100%;
+      display: block;
     }
 
     a {
-      color: inherit;
       text-decoration: none;
+      color: inherit;
     }
 
-    button {
-      font: inherit;
+    /* Typography System */
+    .display-title,
+    .section-title,
+    .card-title {
+      /* Using Noto Serif SC 300 to mimic Waldenburg's whisper-thin elegant look */
+      font-family: 'Noto Serif SC', 'Songti SC', serif;
+      font-weight: 300;
+      color: var(--text-primary);
     }
 
-    .page-shell::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.38)),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='rgba(19,32,58,0.045)' stroke-width='1'%3E%3Cpath d='M0 70h140M70 0v140'/%3E%3C/g%3E%3C/svg%3E");
-      opacity: 0.34;
-      mix-blend-mode: multiply;
-      z-index: -1;
+    .display-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
     }
 
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      line-height: 1.17;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 1.75rem;
+      line-height: 1.13;
+      margin-bottom: 12px;
+    }
+
+    .body-large {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      letter-spacing: 0.16px;
+      /* Positive tracking for body text */
+    }
+
+    .body-standard {
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      letter-spacing: 0.16px;
+    }
+
+    .caption {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      letter-spacing: 0.14px;
+    }
+
+    .small {
+      font-size: 0.81rem;
+    }
+
+    .micro {
+      font-size: 0.75rem;
+    }
+
+    .text-muted {
+      color: var(--text-muted);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* Layout & Containers */
     .container {
-      width: min(calc(100% - 32px), var(--container));
+      width: min(100% - 48px, 1200px);
       margin: 0 auto;
     }
 
-    .eyebrow {
+    .section {
+      padding: 120px 0;
+    }
+
+    .bg-light {
+      background-color: var(--bg-secondary);
+    }
+
+    /* Shadows */
+    .shadow-inset {
+      box-shadow: var(--shadow-inset);
+    }
+
+    .shadow-outline {
+      box-shadow: var(--shadow-inset), var(--shadow-outline);
+    }
+
+    .shadow-card {
+      box-shadow: var(--shadow-card);
+    }
+
+    .shadow-warm {
+      box-shadow: var(--shadow-warm), var(--shadow-outline);
+    }
+
+    /* Buttons */
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 14px;
-      border: 1px solid rgba(35, 81, 255, 0.16);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.7);
-      color: var(--accent-deep);
-      font-size: 0.92rem;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.94rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      border-radius: 9999px;
+      /* Pill shape */
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-black {
+      background-color: var(--text-primary);
+      color: var(--bg-primary);
+      padding: 12px 24px;
+    }
+
+    .btn-white {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      padding: 12px 24px;
+      box-shadow: var(--shadow-outline);
+    }
+
+    /* The signature ElevenLabs warm stone button */
+    .btn-warm {
+      background-color: var(--bg-warm);
+      color: var(--text-primary);
+      padding: 14px 28px 14px 22px;
+      /* Slight asymmetric padding */
+      border-radius: 30px;
+      box-shadow: var(--shadow-warm);
+      font-family: 'Noto Serif SC', serif;
+      /* Special touch */
       font-weight: 700;
-      letter-spacing: 0.02em;
-      backdrop-filter: blur(18px);
     }
 
-    .eyebrow::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), #69a3ff);
-      box-shadow: 0 0 0 6px rgba(35, 81, 255, 0.1);
+    .btn-warm svg {
+      transition: transform 0.2s ease;
     }
 
-    .section {
-      padding: 96px 0;
-      scroll-margin-top: calc(var(--header-h) + 18px);
+    .btn-warm:hover svg {
+      transform: translateX(4px);
     }
 
-    .section-head {
-      display: grid;
-      gap: 18px;
-      margin-bottom: 34px;
-      max-width: 760px;
+    .full-width {
+      width: 100%;
     }
 
-    .section-head h2 {
-      margin: 0;
-      font-family: "Noto Serif SC", serif;
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      line-height: 1.18;
-      letter-spacing: -0.03em;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--ink-soft);
-      font-size: 1.05rem;
-    }
-
+    /* Header */
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 30;
-      padding: 14px 0;
-      background: rgba(246, 243, 238, 0.72);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(19, 32, 58, 0.05);
+      z-index: 100;
+      background-color: rgba(var(--bg-primary-rgb), 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
     }
 
     .header-inner {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 24px;
-      min-height: calc(var(--header-h) - 28px);
-    }
-
-    .brand {
-      display: inline-flex;
       align-items: center;
-      gap: 14px;
-      min-width: 0;
     }
 
-    .brand-mark {
-      width: 48px;
-      height: 48px;
-      padding: 8px;
-      border-radius: 15px;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(220, 230, 255, 0.8));
-      border: 1px solid rgba(35, 81, 255, 0.14);
-      box-shadow: var(--shadow-soft);
+    .brand-name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
     }
 
-    .brand-copy {
-      display: grid;
-      gap: 2px;
-    }
-
-    .brand-copy strong {
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-    }
-
-    .brand-copy span {
-      color: var(--ink-soft);
-      font-size: 0.86rem;
-    }
-
-    .nav-shell {
+    .main-nav {
       display: flex;
-      align-items: center;
-      gap: 18px;
+      gap: 32px;
     }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      color: var(--ink-soft);
-      font-size: 0.95rem;
+    .main-nav a {
+      font-size: 0.94rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      letter-spacing: 0.15px;
     }
 
-    .nav a:hover,
-    .nav a:focus-visible {
-      color: var(--ink);
+    .main-nav a:hover {
+      color: var(--text-primary);
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
 
-    .nav-toggle {
-      display: none;
-      width: 46px;
-      height: 46px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.78);
-      border-radius: 14px;
-      color: var(--ink);
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .icon-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
       cursor: pointer;
     }
 
-    .nav-toggle svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      border: 1px solid transparent;
-    }
-
-    .button:hover,
-    .button:focus-visible {
-      transform: translateY(-1px);
-    }
-
-    .button-primary {
-      color: #fff;
-      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
-      box-shadow: 0 18px 34px rgba(35, 81, 255, 0.24);
-    }
-
-    .button-secondary {
-      background: rgba(255, 255, 255, 0.76);
-      border-color: rgba(19, 32, 58, 0.1);
-      color: var(--ink);
-    }
-
-    .button-ghost {
-      background: transparent;
-      border-color: rgba(19, 32, 58, 0.12);
-      color: var(--ink);
-    }
-
+    /* Hero Section */
     .hero {
-      padding: 52px 0 72px;
+      padding: 120px 0 80px;
     }
 
-    .hero-grid {
+    .hero-container {
       display: grid;
-      grid-template-columns: 1.06fr 0.94fr;
-      gap: 34px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
       align-items: center;
     }
 
     .hero-copy {
-      display: grid;
-      gap: 24px;
-    }
-
-    .hero-copy h1 {
-      margin: 0;
-      font-family: "Noto Serif SC", serif;
-      font-size: clamp(2.75rem, 6vw, 5.45rem);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-copy .lead {
-      margin: 0;
-      color: var(--ink-soft);
-      font-size: clamp(1rem, 2vw, 1.18rem);
-      max-width: 62ch;
-    }
-
-    .hero-copy .lead strong {
-      color: var(--ink);
-    }
-
-    .hero-actions {
       display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
+      flex-direction: column;
+      gap: 32px;
     }
 
-    .hero-meta {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .metric {
-      padding: 18px 18px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(19, 32, 58, 0.08);
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(14px);
-    }
-
-    .metric strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 1.42rem;
-      line-height: 1;
-      color: var(--ink);
-    }
-
-    .metric span {
-      font-size: 0.92rem;
-      color: var(--ink-soft);
-    }
-
-    .hero-note {
+    .hero-cta {
       display: flex;
+      gap: 16px;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 10px 14px;
-      color: var(--ink-soft);
-      font-size: 0.95rem;
     }
 
-    .hero-note span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .social-proof-micro {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .hero-note span::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--teal);
+    .tag {
+      font-size: 0.81rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      background-color: var(--bg-secondary);
+      color: var(--text-secondary);
     }
 
-    .hero-stage {
-      position: relative;
-      min-height: 660px;
-      border-radius: calc(var(--radius-xl) + 10px);
-      padding: 28px;
-      overflow: hidden;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(236, 241, 255, 0.82)),
-        linear-gradient(135deg, rgba(35, 81, 255, 0.16), rgba(10, 143, 138, 0.12));
-      border: 1px solid rgba(19, 32, 58, 0.08);
-      box-shadow: var(--shadow);
+    .tag-warm {
+      font-size: 0.81rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      background-color: var(--bg-warm);
+      color: var(--text-primary);
+      display: inline-block;
+      margin-bottom: 16px;
     }
 
-    .hero-stage::before,
-    .hero-stage::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(2px);
-    }
-
-    .hero-stage::before {
-      width: 250px;
-      height: 250px;
-      top: -70px;
-      right: -50px;
-      background: radial-gradient(circle, rgba(35, 81, 255, 0.22), transparent 68%);
-    }
-
-    .hero-stage::after {
-      width: 180px;
-      height: 180px;
-      bottom: -40px;
-      left: -40px;
-      background: radial-gradient(circle, rgba(10, 143, 138, 0.18), transparent 72%);
-    }
-
-    .stage-label {
-      position: absolute;
-      top: 22px;
-      left: 22px;
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: rgba(19, 32, 58, 0.86);
-      color: #fff;
-      font-size: 0.88rem;
-      letter-spacing: 0.03em;
-    }
-
-    .stage-label::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #89f2bf;
-      box-shadow: 0 0 0 6px rgba(137, 242, 191, 0.18);
-    }
-
-    .stage-device {
-      position: absolute;
-      left: 8%;
-      top: 10%;
-      width: 46%;
-      padding: 16px;
-      border-radius: 34px;
-      background: linear-gradient(180deg, #151c2f, #0f1728);
-      box-shadow: 0 30px 70px rgba(17, 25, 44, 0.28);
-      transform: rotate(-5deg);
-    }
-
-    .stage-device img {
-      width: 100%;
+    .media-frame {
       border-radius: 24px;
-      background: #fff;
+      overflow: hidden;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-light);
     }
 
-    .stage-card {
-      position: absolute;
-      display: grid;
-      gap: 12px;
-      padding: 16px;
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(19, 32, 58, 0.08);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(14px);
-    }
-
-    .stage-card strong {
-      font-size: 0.98rem;
-    }
-
-    .stage-card span {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-    }
-
-    .stage-card img {
+    .media-frame video {
       width: 100%;
-      border-radius: 16px;
-      border: 1px solid rgba(19, 32, 58, 0.08);
+      height: auto;
+      aspect-ratio: 16/9;
+      object-fit: cover;
     }
 
-    .stage-card.results {
-      width: 44%;
-      top: 13%;
-      right: 6%;
-    }
-
-    .stage-card.longform {
-      width: 50%;
-      bottom: 8%;
-      right: 10%;
-    }
-
-    .stage-ribbon {
-      position: absolute;
-      left: 8%;
-      bottom: 10%;
-      padding: 12px 16px;
-      border-left: 4px solid var(--warm);
-      background: rgba(255, 250, 238, 0.92);
-      border-radius: 0 18px 18px 0;
-      box-shadow: var(--shadow-soft);
-      max-width: 38%;
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-
-    .logo-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .logo-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 14px;
-      min-height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.74);
-      color: var(--ink-soft);
-      font-size: 0.94rem;
-      box-shadow: 0 8px 22px rgba(18, 29, 50, 0.04);
-    }
-
-    .grid-3,
-    .grid-4,
-    .grid-2 {
+    /* Bento Grid */
+    .bento-grid {
       display: grid;
-      gap: 18px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 64px;
     }
 
-    .grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .bento-large {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
     }
 
     .card {
-      position: relative;
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      background: var(--surface);
-      border: 1px solid rgba(19, 32, 58, 0.08);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(16px);
-    }
-
-    .card h3,
-    .card h4 {
-      margin: 0 0 10px;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--ink-soft);
-    }
-
-    .feature-card {
-      display: grid;
-      gap: 14px;
-      min-height: 100%;
-    }
-
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(145deg, rgba(35, 81, 255, 0.12), rgba(10, 143, 138, 0.1));
-      color: var(--accent-deep);
-      font-size: 1.35rem;
-      font-weight: 800;
-    }
-
-    .feature-points {
-      display: grid;
-      gap: 8px;
-      margin-top: 6px;
-      font-size: 0.96rem;
-      color: var(--ink-soft);
-    }
-
-    .feature-points span {
-      display: inline-flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .feature-points span::before {
-      content: "—";
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .spotlight {
-      display: grid;
-      grid-template-columns: 1.02fr 0.98fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .spotlight-copy {
-      display: grid;
-      gap: 20px;
-      padding: 34px;
-      border-radius: calc(var(--radius-xl) + 4px);
-      background:
-        linear-gradient(180deg, rgba(18, 30, 56, 0.96), rgba(16, 24, 46, 0.92)),
-        linear-gradient(135deg, rgba(35, 81, 255, 0.1), rgba(10, 143, 138, 0.08));
-      color: #eff5ff;
-      box-shadow: 0 26px 56px rgba(17, 24, 46, 0.22);
-    }
-
-    .spotlight-copy p,
-    .spotlight-copy li {
-      color: rgba(239, 245, 255, 0.82);
-    }
-
-    .spotlight-copy h3 {
-      margin: 0;
-      font-family: "Noto Serif SC", serif;
-      font-size: clamp(1.8rem, 4vw, 2.7rem);
-      line-height: 1.2;
-    }
-
-    .spotlight-list {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .spotlight-list li::before {
-      content: "•";
-      color: #8db2ff;
-      margin-right: 10px;
-    }
-
-    .spotlight-media {
-      position: relative;
+      background-color: var(--bg-primary);
+      border-radius: 20px;
       overflow: hidden;
-      border-radius: calc(var(--radius-xl) + 4px);
-      min-height: 100%;
-      border: 1px solid rgba(19, 32, 58, 0.08);
-      box-shadow: var(--shadow);
-      background: #0f172a;
+      display: flex;
+      flex-direction: column;
     }
 
-    .spotlight-media img,
-    .spotlight-media video {
+    .card-content {
+      padding: 40px;
+      flex: 1;
+    }
+
+    .card-media {
+      background-color: var(--bg-secondary);
+      min-height: 240px;
+      overflow: hidden;
+    }
+
+    .card-media img,
+    .card-media video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top;
     }
 
-    .scenario-card {
-      overflow: hidden;
-      padding: 0;
-    }
-
-    .scenario-media {
-      position: relative;
-      aspect-ratio: 1.05 / 1;
-      background: linear-gradient(180deg, rgba(19, 32, 58, 0.04), rgba(19, 32, 58, 0.1));
-    }
-
-    .scenario-media img,
-    .scenario-media video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .scenario-body {
-      display: grid;
-      gap: 10px;
-      padding: 22px;
-    }
-
-    .scenario-body h3 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .scenario-body p {
-      margin: 0;
-      color: var(--ink-soft);
-    }
-
-    .scenario-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(35, 81, 255, 0.08);
-      color: var(--accent-deep);
-      font-size: 0.86rem;
-      font-weight: 700;
-    }
-
-    .quote-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .quote-card {
-      display: grid;
-      gap: 18px;
-      min-height: 100%;
-    }
-
-    .quote-card p {
-      font-size: 1rem;
-      color: var(--ink);
-    }
-
-    .quote-card footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: auto;
-      color: var(--ink-soft);
-      font-size: 0.92rem;
-    }
-
-    .quote-score {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(10, 143, 138, 0.08);
-      color: var(--teal);
-      font-weight: 700;
-      font-size: 0.88rem;
-    }
-
-    .pricing-wrap {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: 1.05fr 0.95fr;
-      align-items: start;
-    }
-
-    .pricing-overview {
-      display: grid;
-      gap: 18px;
-    }
-
-    .price-grid {
-      display: grid;
-      gap: 18px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .price-card {
-      display: grid;
-      gap: 16px;
-      padding: 26px;
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(19, 32, 58, 0.08);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .price-card.featured {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 238, 255, 0.96));
-      border-color: rgba(35, 81, 255, 0.18);
-      box-shadow: 0 24px 60px rgba(35, 81, 255, 0.16);
-    }
-
-    .price-card .label {
-      display: inline-flex;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(35, 81, 255, 0.08);
-      color: var(--accent-deep);
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .price-card strong {
-      font-size: 3rem;
-      line-height: 1;
-      letter-spacing: -0.05em;
-    }
-
-    .price-card strong small {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0;
-      color: var(--ink-soft);
-      margin-left: 6px;
-    }
-
-    .price-card ul,
-    .benefit-list,
-    .faq-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .price-card li,
-    .benefit-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      color: var(--ink-soft);
-      padding: 7px 0;
-    }
-
-    .price-card li::before,
-    .benefit-list li::before {
-      content: "";
-      width: 9px;
-      height: 9px;
-      flex: 0 0 9px;
-      margin-top: 0.55em;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), #72abff);
-    }
-
-    .pricing-side {
-      display: grid;
-      gap: 18px;
-    }
-
-    .mini-grid {
-      display: grid;
-      gap: 14px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .mini-stat {
-      padding: 20px;
-      border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .mini-stat strong {
-      display: block;
-      font-size: 1.2rem;
-      margin-bottom: 4px;
-    }
-
-    .mini-stat span {
-      color: var(--ink-soft);
-      font-size: 0.92rem;
-    }
-
-    .gallery-shell {
-      display: grid;
-      gap: 18px;
-    }
-
+    /* Scenarios Gallery */
     .gallery-grid {
       display: grid;
-      gap: 18px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .gallery-card {
-      overflow: hidden;
-      padding: 0;
-    }
-
-    .gallery-card img,
-    .gallery-card video {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      object-position: top center;
-      background: #eef2ff;
-    }
-
-    .gallery-caption {
-      display: grid;
-      gap: 8px;
-      padding: 18px 18px 20px;
-    }
-
-    .gallery-caption strong {
-      font-size: 1rem;
-    }
-
-    .gallery-caption span {
-      color: var(--ink-soft);
-      font-size: 0.93rem;
-    }
-
-    details.media-library {
-      border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.74);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-    }
-
-    details.media-library summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 22px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      font-weight: 700;
-    }
-
-    details.media-library summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .summary-copy {
-      display: grid;
-      gap: 6px;
-    }
-
-    .summary-copy small {
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .summary-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      background: rgba(35, 81, 255, 0.08);
-      display: grid;
-      place-items: center;
-      color: var(--accent-deep);
-      transition: transform 0.2s ease;
-    }
-
-    details[open] .summary-icon {
-      transform: rotate(45deg);
-    }
-
-    .library-body {
-      padding: 0 24px 24px;
-    }
-
-    .download-banner {
-      display: grid;
-      gap: 24px;
-      grid-template-columns: 1.12fr 0.88fr;
-      align-items: center;
-      padding: 34px;
-      border-radius: calc(var(--radius-xl) + 8px);
-      background:
-        linear-gradient(135deg, rgba(20, 32, 60, 0.96), rgba(24, 52, 144, 0.94)),
-        linear-gradient(140deg, rgba(10, 143, 138, 0.15), rgba(255, 255, 255, 0));
-      color: #eff5ff;
-      box-shadow: 0 34px 64px rgba(17, 26, 52, 0.28);
-    }
-
-    .download-banner h2 {
-      margin: 0 0 14px;
-      font-family: "Noto Serif SC", serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.18;
-    }
-
-    .download-banner p {
-      margin: 0;
-      color: rgba(239, 245, 255, 0.8);
-    }
-
-    .download-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .download-card {
-      display: grid;
-      gap: 14px;
-      padding: 22px;
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(16px);
-    }
-
-    .download-card ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 10px;
-      color: rgba(239, 245, 255, 0.82);
-    }
-
-    .download-card li::before {
-      content: "•";
-      margin-right: 10px;
-      color: #8eb3ff;
-    }
-
-    .faq-grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .faq-item {
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-    }
-
-    .faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 20px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      font-weight: 700;
+      margin-top: 64px;
     }
 
-    .faq-item summary::-webkit-details-marker {
-      display: none;
+    .gallery-grid .card {
+      border-radius: 16px;
     }
 
-    .faq-item summary::after {
-      content: "+";
-      font-size: 1.35rem;
-      color: var(--accent-deep);
+    .gallery-grid video,
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
     }
 
-    .faq-item[open] summary::after {
-      content: "−";
+    .card-footer {
+      padding: 16px;
+      border-top: 1px solid var(--border-subtle);
     }
 
-    .faq-item p {
-      margin: 0;
-      padding: 0 24px 22px;
-      color: var(--ink-soft);
-    }
-
-    .footer {
-      padding: 36px 0 54px;
-      color: var(--ink-soft);
-    }
-
-    .footer-inner {
+    /* Testimonials */
+    .testimonial-grid {
       display: grid;
-      gap: 18px;
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: end;
-      padding-top: 26px;
-      border-top: 1px solid rgba(19, 32, 58, 0.08);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .testimonial-card {
+      padding: 40px 32px;
+      justify-content: space-between;
+    }
+
+    .testimonial-card .author {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Pricing */
+    .pricing-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .benefit-list {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .benefit-list li {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .benefit-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--text-primary);
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .pricing-cards .card {
+      padding: 32px 24px;
+    }
+
+    .pricing-cards .highlight {
+      border: 1px solid var(--border-light);
+      transform: scale(1.02);
+    }
+
+    .price {
+      font-size: 3rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      margin: 16px 0 8px;
+    }
+
+    /* Footer */
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--border-subtle);
     }
 
     .footer-links {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 10px 18px;
+      gap: 24px;
     }
 
-    .footer-links a:hover,
-    .footer-links a:focus-visible {
-      color: var(--ink);
-    }
+    /* Responsive */
+    @media (max-width: 1024px) {
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      animation: rise 0.8s ease forwards;
-    }
-
-    .delay-1 { animation-delay: 0.08s; }
-    .delay-2 { animation-delay: 0.16s; }
-    .delay-3 { animation-delay: 0.24s; }
-    .delay-4 { animation-delay: 0.32s; }
-
-    @keyframes rise {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 1120px) {
-      .hero-grid,
-      .pricing-wrap,
-      .download-banner,
-      .spotlight {
+      .hero-container,
+      .bento-large,
+      .pricing-layout {
         grid-template-columns: 1fr;
       }
 
-      .hero-stage {
-        min-height: 560px;
+      .hero-copy {
+        text-align: center;
+        align-items: center;
       }
 
-      .stage-card.results {
-        width: 42%;
+      .hero-cta {
+        justify-content: center;
       }
 
-      .stage-card.longform {
-        width: 48%;
-      }
-
-      .quote-grid,
-      .grid-4,
       .gallery-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 900px) {
-      :root {
-        --header-h: 78px;
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .site-header {
-        padding: 10px 0;
+      .testimonial-grid {
+        grid-template-columns: 1fr;
       }
 
-      .nav-shell {
-        position: absolute;
-        top: calc(100% + 10px);
-        left: 16px;
-        right: 16px;
+      .main-nav {
         display: none;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 16px;
-        border-radius: 22px;
-        background: rgba(255, 255, 255, 0.94);
-        border: 1px solid rgba(19, 32, 58, 0.08);
-        box-shadow: var(--shadow);
+        /* In real implementation, show mobile menu */
       }
 
-      .nav-shell.open {
-        display: flex;
-      }
-
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
-      }
-
-      .header-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .nav-toggle {
-        display: inline-flex;
-      }
-
-      .hero-meta,
-      .grid-3,
-      .quote-grid,
-      .price-grid,
-      .mini-grid,
-      .gallery-grid,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-stage {
-        min-height: 720px;
-      }
-
-      .stage-device {
-        width: 58%;
-        left: 6%;
-        top: 8%;
-      }
-
-      .stage-card.results {
-        width: 48%;
-        right: 4%;
-      }
-
-      .stage-card.longform {
-        width: 60%;
-        right: 6%;
-      }
-
-      .stage-ribbon {
-        max-width: 56%;
-      }
-
-      .footer-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-links {
-        justify-content: flex-start;
+      .mobile-menu-btn {
+        display: block;
       }
     }
 
     @media (max-width: 640px) {
       .section {
-        padding: 76px 0;
+        padding: 80px 0;
       }
 
-      .hero {
-        padding: 34px 0 56px;
+      .bento-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-copy h1 {
-        font-size: clamp(2.3rem, 12vw, 3.45rem);
+      .gallery-grid,
+      .pricing-cards {
+        grid-template-columns: 1fr;
       }
 
-      .hero-stage {
-        min-height: 650px;
-        padding: 18px;
-      }
-
-      .stage-label {
-        left: 18px;
-        top: 18px;
-      }
-
-      .stage-device {
-        position: relative;
-        inset: auto;
-        width: 78%;
-        margin-top: 46px;
-        transform: none;
-      }
-
-      .stage-card {
-        position: relative;
-      }
-
-      .stage-card.results,
-      .stage-card.longform {
-        width: auto;
-        right: auto;
-        top: auto;
-        bottom: auto;
-        margin-top: 16px;
-      }
-
-      .stage-ribbon {
-        position: relative;
-        left: auto;
-        bottom: auto;
-        max-width: none;
-        margin-top: 16px;
-      }
-
-      .card,
-      .price-card,
-      .download-banner,
-      .spotlight-copy {
-        padding: 22px;
-      }
-
-      .button {
-        width: 100%;
+      .footer-inner {
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
       }
     }
   </style>
 </head>
+
 <body>
-  <div class="page-shell">
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="#top" aria-label="译站首页">
-          <img class="brand-mark" src="assets/images/favicon.png" alt="译站图标" />
-          <span class="brand-copy">
-            <strong>译站 Transtation</strong>
-            <span>把多引擎、AI 与翻译工作流收进一个应用</span>
-          </span>
-        </a>
-        <button class="nav-toggle" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="site-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
-            <path d="M4 7h16M4 12h16M4 17h16" />
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <span class="brand-name">Transtation</span>
+      </a>
+
+      <button class="mobile-menu-btn" aria-label="Toggle Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+
+      <nav class="main-nav">
+        <a href="#features">工作流</a>
+        <a href="#scenarios">场景</a>
+        <a href="#proof">评价</a>
+        <a href="#pricing">权益</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5">
+            <circle cx="12" cy="12" r="5" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
           </svg>
         </button>
-        <div class="nav-shell" id="site-nav">
-          <nav class="nav" aria-label="主导航">
-            <a href="#capabilities">能力矩阵</a>
-            <a href="#scenarios">场景演示</a>
-            <a href="#proof">专业评价</a>
-            <a href="#pricing">会员权益</a>
-            <a href="#media">界面预览</a>
-            <a href="#faq">常见问题</a>
-          </nav>
-          <div class="header-actions">
-            <a class="button button-secondary" href="https://github.com/FunnySaltyFish/Transtation-KMP" target="_blank"
-              rel="noopener noreferrer">查看源码</a>
-            <a class="button button-primary" href="#download">立即下载</a>
-          </div>
-        </div>
+        <button id="lang-toggle" class="icon-btn">EN</button>
+        <a href="#download" class="btn btn-black">获取应用</a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <span class="eyebrow reveal">多引擎同屏对照 + AI 深度翻译 + 开源可信</span>
-            <h1 class="reveal delay-1">把每一种翻译场景，放进同一个专业工作台。</h1>
-            <p class="lead reveal delay-2">
-              译站面向学生、开发者、内容创作者、跨境团队与专业译者，
-              将 <strong>40+ 翻译引擎、20+ 大模型、长文翻译、图片翻译、语音翻译、漫画翻译、悬浮窗屏幕翻译</strong>
-              整合在一个界面里。你不必在多个网站和 App 之间来回切换，输入一次，就能更快找到更好的结果。
-            </p>
-            <div class="hero-actions reveal delay-3">
-              <a class="button button-primary" href="#download">免费下载</a>
-              <a class="button button-secondary" href="https://play.google.com/store/apps/details?id=com.funny.translation.google"
-                target="_blank" rel="noopener noreferrer">Google Play</a>
-              <a class="button button-ghost" href="https://github.com/FunnySaltyFish/Transtation-KMP" target="_blank"
-                rel="noopener noreferrer">开源仓库</a>
-            </div>
-            <div class="hero-meta reveal delay-4">
-              <div class="metric">
-                <strong>3万+</strong>
-                <span>累计下载</span>
-              </div>
-              <div class="metric">
-                <strong>3000+</strong>
-                <span>注册用户</span>
-              </div>
-              <div class="metric">
-                <strong>40+</strong>
-                <span>翻译引擎</span>
-              </div>
-              <div class="metric">
-                <strong>527+</strong>
-                <span>开源仓库 Stars</span>
-              </div>
-            </div>
-            <div class="hero-note">
-              <span>基础翻译引擎免费不限量</span>
-              <span>支持 Android、Windows、Google Play</span>
-              <span>支持本地离线大模型与隐私场景</span>
-            </div>
-            <div class="logo-row" aria-label="已接入能力示意">
-              <span class="logo-chip">Bing</span>
-              <span class="logo-chip">Google</span>
-              <span class="logo-chip">百度</span>
-              <span class="logo-chip">腾讯</span>
-              <span class="logo-chip">Gemini</span>
-              <span class="logo-chip">Claude</span>
-              <span class="logo-chip">GLM</span>
-              <span class="logo-chip">通义千问</span>
-            </div>
-          </div>
-
-          <div class="hero-stage reveal delay-2" aria-label="译站功能预览">
-            <span class="stage-label">专业工作流 · 同屏比较 · 即时落地</span>
-            <div class="stage-device">
-              <img src="assets/showcase/主页.jpg" alt="译站应用主界面截图" loading="eager" />
-            </div>
-            <article class="stage-card results">
-              <strong>多引擎同屏翻译</strong>
-              <span>一次输入，同时对照传统引擎与大模型输出，快速选优。</span>
-              <img src="assets/showcase/大模型翻译结果列表.jpg" alt="译站大模型翻译结果列表截图" loading="eager" />
-            </article>
-            <article class="stage-card longform">
-              <strong>长文翻译与术语关联</strong>
-              <span>长上下文、术语表、风格控制与整本级内容翻译合并在同一个流程中。</span>
-              <img src="assets/showcase/长文翻译演示封面.png" alt="译站长文翻译演示封面" loading="eager" />
-            </article>
-            <div class="stage-ribbon">
-              开放源代码，可直接查看底层实现；既适合日常使用，也能满足对隐私与可控性要求更高的专业用户。
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="capabilities">
-        <div class="container">
-          <div class="section-head">
-            <span class="eyebrow">为什么更容易翻出好结果</span>
-            <h2>不是把翻译功能堆在一起，而是把结果判断、上下文理解和工作流打通。</h2>
-            <p>
-              译站把“先试哪个引擎、怎么比较、什么时候该用大模型、如何处理图片语音漫画、如何在隐私场景下离线运行”这些实际问题都直接做进了产品结构里。
-            </p>
-          </div>
-
-          <div class="grid-4">
-            <article class="card feature-card">
-              <div class="feature-icon">01</div>
-              <h3>多引擎同屏对照</h3>
-              <p>一次输入，Bing、Google、百度、腾讯等结果并排展示，减少来回切换和主观猜测。</p>
-              <div class="feature-points">
-                <span>基础引擎免费不限量，适合高频查词与短句翻译。</span>
-                <span>同一文本可直接比较不同风格和措辞，选优更快。</span>
-                <span>查词、例句、发音、收藏与复制都在同一处完成。</span>
-              </div>
-            </article>
-
-            <article class="card feature-card">
-              <div class="feature-icon">02</div>
-              <h3>精选 20+ 大模型翻译</h3>
-              <p>对话式润色、长文翻译、术语控制、复杂图片理解，都可以直接调用适合的模型完成。</p>
-              <div class="feature-points">
-                <span>持续更新模型池，减少单一模型失真带来的风险。</span>
-                <span>支持专业表达、上下文延续与风格统一。</span>
-                <span>AI 点数按需购买，会员购买可享 9 折起、最高 8 折。</span>
-              </div>
-            </article>
-
-            <article class="card feature-card">
-              <div class="feature-icon">03</div>
-              <h3>全场景输入覆盖</h3>
-              <p>文本、长文、图片、语音、漫画、悬浮窗、区域截图、全屏截图都能接入同一套翻译能力。</p>
-              <div class="feature-points">
-                <span>支持手写、竖排古文、复杂表格与跨语言混合内容。</span>
-                <span>系统内录、扬声器输入、流式语音翻译与实时纠错可组合使用。</span>
-                <span>漫画翻译支持一键翻译上色与自然语言编辑。</span>
-              </div>
-            </article>
-
-            <article class="card feature-card">
-              <div class="feature-icon">04</div>
-              <h3>插件、主题与开源可信</h3>
-              <p>产品不是封闭黑盒，支持插件市场、引擎扩展、自定义工作流、主题切换与源代码审阅。</p>
-              <div class="feature-points">
-                <span>内置 10+ 插件，支持下载、更新、导入、导出。</span>
-                <span>MD3 设计，深色浅色、主题色与界面语言可独立切换。</span>
-                <span>支持本地运行大模型翻译，适合离线与隐私敏感环境。</span>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="spotlight">
-            <div class="spotlight-copy">
-              <span class="eyebrow">对专业用户足够细，对新手也足够直接</span>
-              <h3>先给你稳定可用的免费基础能力，再把 AI 与高级场景按需接上。</h3>
-              <p>
-                译站的设计重点不是“把所有功能挤进首页”，而是让你在第一分钟就能理解这款工具为什么更省时间：基础引擎直接免费使用，
-                复杂场景再进入长文、图片、语音、漫画、悬浮窗和本地模型模块，路径清楚，学习成本低。
-              </p>
-              <ul class="spotlight-list">
-                <li>非会员每月可用 30 张图片翻译额度，会员每月 90 张。</li>
-                <li>大模型语音朗读支持更自然的情绪、语速调控与多语言混读，显著降低机械感。</li>
-                <li>语音翻译结合大模型纠错与补充上下文，适合会议、课程、播客与视频理解。</li>
-                <li>本地模型可独立运行，离线可用，更适合隐私资料、敏感内容与网络不稳定场景。</li>
-              </ul>
-            </div>
-            <div class="spotlight-media">
-              <video controls playsinline muted preload="metadata" poster="assets/showcase/带主题的侧边栏.jpg">
-                <source src="assets/showcase/主翻译结果演示视频_batch.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="scenarios">
-        <div class="container">
-          <div class="section-head">
-            <span class="eyebrow">真实场景演示</span>
-            <h2>从短句查词，到整本长文，再到图片、语音、漫画与屏幕即时翻译。</h2>
-            <p>
-              常见高频场景都可以直接预览：查词、长文、图片、漫画、悬浮窗和语音翻译，进入前就能看清交互方式与结果风格。
-            </p>
-          </div>
-
-          <div class="grid-3">
-            <article class="card scenario-card">
-              <div class="scenario-media">
-                <img src="assets/showcase/大模型翻译结果列表.jpg" alt="译站多引擎和大模型同屏翻译结果列表" loading="lazy" />
-              </div>
-              <div class="scenario-body">
-                <span class="scenario-tag">对照式翻译</span>
-                <h3>多引擎同屏比较</h3>
-                <p>同一句话同时调用传统引擎与大模型，适合快速查词、句子改写、术语校对和结果选优。</p>
-              </div>
-            </article>
-
-            <article class="card scenario-card">
-              <div class="scenario-media">
-                <video controls playsinline muted preload="metadata" poster="assets/showcase/长文翻译演示封面.png">
-                  <source src="assets/showcase/长文翻译翻译演示_batch.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div class="scenario-body">
-                <span class="scenario-tag">长文工作流</span>
-                <h3>长文翻译与术语表</h3>
-                <p>智能关联上下文，自动提取并保持专业术语，适合论文、小说、手册、说明书与整本内容处理。</p>
-              </div>
-            </article>
-
-            <article class="card scenario-card">
-              <div class="scenario-media">
-                <video controls playsinline muted preload="metadata" poster="assets/showcase/本地模型图片翻译演示.jpg">
-                  <source src="assets/showcase/图片翻译演示视频_batch.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div class="scenario-body">
-                <span class="scenario-tag">多模态理解</span>
-                <h3>图片翻译与复杂版式识别</h3>
-                <p>可处理手写、竖排古文、复杂表格与图片上下文，不只识别文字，还理解图片内容结构。</p>
-              </div>
-            </article>
-
-            <article class="card scenario-card">
-              <div class="scenario-media">
-                <video controls playsinline muted preload="metadata" poster="assets/showcase/漫画翻译演示.jpg">
-                  <source src="assets/showcase/漫画翻译效果演示视频_batch.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div class="scenario-body">
-                <span class="scenario-tag">漫画场景</span>
-                <h3>一键翻译 + 上色 + 编辑</h3>
-                <p>不仅替换文本，还能保持视觉自然度，并支持对图片内容进行自然语言编辑。</p>
-              </div>
-            </article>
-
-            <article class="card scenario-card">
-              <div class="scenario-media">
-                <video controls playsinline muted preload="metadata" poster="assets/showcase/悬浮窗屏幕翻译框选区域大模型结果.jpg">
-                  <source src="assets/showcase/悬浮窗文本翻译演示视频_batch.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div class="scenario-body">
-                <span class="scenario-tag">跨窗口即时翻译</span>
-                <h3>悬浮窗、区域截图、全屏翻译</h3>
-                <p>查资料、看网页、看课件、玩游戏时无需切换应用，框选即译，结果可直接贴合当前操作流。</p>
-              </div>
-            </article>
-
-            <article class="card scenario-card">
-              <div class="scenario-media">
-                <video controls playsinline muted preload="metadata" poster="assets/showcase/悬浮窗屏幕翻译控制页.jpg">
-                  <source src="assets/showcase/实时语音翻译演示视频_batch.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div class="scenario-body">
-                <span class="scenario-tag">语音链路</span>
-                <h3>语音翻译、实时纠错与自然朗读</h3>
-                <p>支持系统内录与扬声器输入，用大模型翻译和纠错，再交给更自然的朗读引擎输出。</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="proof">
-        <div class="container">
-          <div class="section-head">
-            <span class="eyebrow">社会认同与专业评价</span>
-            <h2>长期用户留下的不是空泛好评，而是对翻译效率、结果稳定性和工作流完整性的具体认可。</h2>
-            <p>
-              以下评价基于真实使用场景整理，集中反映了译站最被反复提及的优势：同屏比较、长文上下文、多模态能力、开源透明与高可控性。
-            </p>
-          </div>
-
-          <div class="quote-grid">
-            <article class="card quote-card">
-              <p>“最有价值的不是模型数量，而是我能在一个界面里快速对照多个结果。术语、语气、例句一眼就能判断，明显比单引擎效率高。”</p>
-              <footer>
-                <span>本地化项目经理 · 长期用户反馈</span>
-                <span class="quote-score">结果判断效率高</span>
-              </footer>
-            </article>
-
-            <article class="card quote-card">
-              <p>“长文翻译能连续保留上下文，还能顺手整理术语表。做说明书、课程资料和小说片段时，比传统复制粘贴式流程稳定很多。”</p>
-              <footer>
-                <span>独立译者 · 长文场景反馈</span>
-                <span class="quote-score">上下文更稳</span>
-              </footer>
-            </article>
-
-            <article class="card quote-card">
-              <p>“图片、语音、悬浮窗这些功能不是凑数。它们真的把网页、视频、漫画、游戏和截图阅读都串成了一个连续的翻译工作流。”</p>
-              <footer>
-                <span>内容创作者 · 高频场景反馈</span>
-                <span class="quote-score">跨场景完整</span>
-              </footer>
-            </article>
-          </div>
-
-          <div class="grid-4" style="margin-top: 18px;">
-            <article class="card">
-              <h3>3000+</h3>
-              <p>注册用户持续使用，说明它并不是一次性体验型工具，而是可进入日常流程的产品。</p>
-            </article>
-            <article class="card">
-              <h3>40+</h3>
-              <p>引擎与模型能力并存，意味着可以在成本、速度、风格与准确率之间做更合理的选择。</p>
-            </article>
-            <article class="card">
-              <h3>10+</h3>
-              <p>插件生态已具备扩展性，不同用户能按需接入自己常用的引擎与工作流模块。</p>
-            </article>
-            <article class="card">
-              <h3>527+</h3>
-              <p>开源仓库累计 Stars，给了产品额外的可信度，也让技术用户能直接审阅实现细节。</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="pricing">
-        <div class="container">
-          <div class="section-head">
-            <span class="eyebrow">会员与 AI 点数</span>
-            <h2>先从免费基础能力开始，再根据使用强度升级会员或购买 AI 点数。</h2>
-            <p>
-              译站把高频基础能力和高成本 AI 能力分层处理。这样新用户没有进入门槛，专业用户也能获得更可控的成本结构。
-            </p>
-          </div>
-
-          <div class="pricing-wrap">
-            <div class="pricing-overview">
-              <div class="price-grid">
-                <article class="price-card">
-                  <span class="label">月卡</span>
-                  <strong>¥4.99<small>/ 月</small></strong>
-                  <p>适合高频查词、图片翻译和日常多场景用户，低门槛就能获得更高权益。</p>
-                  <ul>
-                    <li>图片翻译额度提升至每月 90 张</li>
-                    <li>基础引擎继续免费不限量使用</li>
-                    <li>购买 AI 点数可享会员折扣</li>
-                    <li>开通会员即赠送 AI 点数用于体验大模型能力</li>
-                  </ul>
-                </article>
-
-                <article class="price-card featured">
-                  <span class="label">年卡</span>
-                  <strong>¥49.99<small>/ 年</small></strong>
-                  <p>适合长期使用者和需要稳定工作流的专业用户，价格更划算，成本更容易预估。</p>
-                  <ul>
-                    <li>全年维持会员图片与折扣权益</li>
-                    <li>更适合长文、语音、漫画等复合场景</li>
-                    <li>会员购买 AI 点数 9 折起，最高 8 折</li>
-                    <li>持续更新模型池与插件市场能力</li>
-                  </ul>
-                </article>
-              </div>
-
-              <article class="card">
-                <h3>AI 点数怎么买更清楚</h3>
-                <p>
-                  大模型相关功能采用按需购买点数的方式，包括 AI 文本翻译点数与 AI 语音点数。当前点数套餐覆盖
-                  1、6、12、30、60、100 六档。会员价根据套餐不同可享 9 折、85 折或 8 折，更适合重度使用者控制预算。
-                </p>
-              </article>
-            </div>
-
-            <div class="pricing-side">
-              <article class="card">
-                <h3>免费与会员的核心差异</h3>
-                <ul class="benefit-list">
-                  <li>非会员：图片翻译每月 30 张；会员：每月 90 张。</li>
-                  <li>基础引擎所有用户都可免费不限量使用。</li>
-                  <li>大模型功能单独计费，会员购买点数更优惠。</li>
-                  <li>会员更适合长期使用图片、长文、语音等复合能力。</li>
-                </ul>
-              </article>
-
-              <div class="mini-grid">
-                <div class="mini-stat">
-                  <strong>20+</strong>
-                  <span>精选大模型</span>
-                </div>
-                <div class="mini-stat">
-                  <strong>10+</strong>
-                  <span>可扩展插件</span>
-                </div>
-                <div class="mini-stat">
-                  <strong>30 / 90</strong>
-                  <span>图片翻译月额度</span>
-                </div>
-                <div class="mini-stat">
-                  <strong>离线可用</strong>
-                  <span>本地模型与隐私场景</span>
-                </div>
-              </div>
-
-              <article class="card">
-                <h3>为什么这样设计定价</h3>
-                <p>
-                  基础翻译查询应该足够轻松，因此保留免费不限量。真正高成本的大模型能力则按需付费，既避免让轻度用户承担不必要成本，也让重度用户获得更清晰的性价比。
-                </p>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="media">
-        <div class="container gallery-shell">
-          <div class="section-head">
-            <span class="eyebrow">界面预览</span>
-            <h2>从主界面到复杂场景演示，一页看清译站在不同任务里的实际表现。</h2>
-            <p>
-              无论是多引擎对照、长文翻译，还是图片、漫画、悬浮窗和本地模型，这里都能直接看到真实界面与结果示例。
-            </p>
-          </div>
-
-          <div class="gallery-grid">
-            <article class="card gallery-card">
-              <img src="assets/showcase/长文翻译演示封面.png" alt="译站长文翻译界面海报" loading="lazy" />
-              <div class="gallery-caption">
-                <strong>长文翻译海报预览</strong>
-                <span>把“长上下文、可控风格、一次翻整本”这些高价值能力直接传达出来。</span>
-              </div>
-            </article>
-
-            <article class="card gallery-card">
-              <img src="assets/showcase/带主题的侧边栏.jpg" alt="译站带主题的侧边栏界面截图" loading="lazy" />
-              <div class="gallery-caption">
-                <strong>主题与侧边栏</strong>
-                <span>MD3 风格与主题切换能力，信息密度高但不杂乱。</span>
-              </div>
-            </article>
-
-            <article class="card gallery-card">
-              <img src="assets/showcase/大模型翻译结果列表.jpg" alt="多引擎和大模型同屏翻译结果截图" loading="lazy" />
-              <div class="gallery-caption">
-                <strong>多引擎同屏结果</strong>
-                <span>同一句话同时获得多种译法，适合快速比对准确度、语气和术语处理。</span>
-              </div>
-            </article>
-
-            <article class="card gallery-card">
-              <img src="assets/showcase/漫画翻译演示.jpg" alt="漫画翻译演示截图" loading="lazy" />
-              <div class="gallery-caption">
-                <strong>漫画翻译</strong>
-                <span>保留视觉结构，翻译、上色与编辑能力融合。</span>
-              </div>
-            </article>
-
-            <article class="card gallery-card">
-              <video controls playsinline muted preload="metadata" poster="assets/showcase/长文翻译演示封面.png">
-                <source src="assets/showcase/主翻译结果演示视频_batch.mp4" type="video/mp4" />
-              </video>
-              <div class="gallery-caption">
-                <strong>主翻译结果演示视频</strong>
-                <span>直接查看输入、出结果、比较与选择的完整过程。</span>
-              </div>
-            </article>
-
-            <article class="card gallery-card">
-              <video controls playsinline muted preload="metadata" poster="assets/showcase/本地模型图片翻译演示.jpg">
-                <source src="assets/showcase/图片翻译演示视频_batch.mp4" type="video/mp4" />
-              </video>
-              <div class="gallery-caption">
-                <strong>图片翻译演示视频</strong>
-                <span>从识别到排版还原的全过程一目了然，适合判断复杂版式的处理能力。</span>
-              </div>
-            </article>
-          </div>
-
-          <details class="media-library">
-            <summary>
-              <span class="summary-copy">
-                查看更多界面与演示内容
-                <small>继续浏览本地模型、古诗文、查词、悬浮窗设置、图片翻译和长文处理等更多真实场景。</small>
-              </span>
-              <span class="summary-icon" aria-hidden="true">+</span>
-            </summary>
-            <div class="library-body">
-              <div class="gallery-grid">
-                <article class="card gallery-card">
-                  <img src="assets/showcase/本地大模型翻译结果列表.jpg" alt="本地大模型翻译结果列表截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>本地模型结果列表</strong>
-                    <span>离线与隐私敏感场景下，也能保持清晰直观的结果对照。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <video controls playsinline muted preload="metadata" poster="assets/showcase/本地模型图片翻译演示.jpg">
-                    <source src="assets/showcase/本地模型翻译演示_batch.mp4" type="video/mp4" />
-                  </video>
-                  <div class="gallery-caption">
-                    <strong>本地模型演示视频</strong>
-                    <span>可本地部署、离线运行，进一步提升可控性。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/本地模型图片翻译演示.jpg" alt="本地模型图片翻译演示截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>本地模型图片翻译</strong>
-                    <span>在离线模式下也可完成图像内容理解与翻译。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/大模型古诗文翻译演示.jpg" alt="大模型古诗文翻译演示截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>古诗文场景</strong>
-                    <span>复杂文本语境下更能体现上下文和风格理解能力。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/大模型古诗文翻译演示2.jpg" alt="大模型古诗文翻译演示二截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>古诗文场景二</strong>
-                    <span>适合展示模型在文言文、文学内容中的表现。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/大模型图片翻译.jpg" alt="大模型图片翻译截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>大模型图片翻译</strong>
-                    <span>兼顾内容理解、排版结构和翻译自然度。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/翻译结果_传统引擎查单词.jpg" alt="传统引擎查单词结果截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>传统引擎查词</strong>
-                    <span>高频查词场景依然足够快，且免费不限量。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/翻译结果_大模型引擎查单词带主题.jpg" alt="大模型引擎查单词带主题截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>大模型查词主题界面</strong>
-                    <span>兼顾主题表现与词义解释、例句扩展能力。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/翻译结果_大模型引擎查单词原主题.jpg" alt="大模型引擎查单词原主题截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>大模型查词原主题</strong>
-                    <span>适合对单词、语块和用法差异做更细的解释。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <video controls playsinline muted preload="metadata" poster="assets/showcase/漫画翻译演示.jpg">
-                    <source src="assets/showcase/漫画翻译效果演示视频_batch.mp4" type="video/mp4" />
-                  </video>
-                  <div class="gallery-caption">
-                    <strong>漫画翻译效果视频</strong>
-                    <span>更直观地展示翻译、上色与内容还原效果。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <video controls playsinline muted preload="metadata" poster="assets/showcase/本地模型图片翻译演示.jpg">
-                    <source src="assets/showcase/图片翻译演示视频_batch.mp4" type="video/mp4" />
-                  </video>
-                  <div class="gallery-caption">
-                    <strong>图片翻译演示视频</strong>
-                    <span>适合展示复杂图片、扫描件与混合内容的处理过程。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <video controls playsinline muted preload="metadata" poster="assets/showcase/大模型图片翻译.jpg">
-                    <source src="assets/showcase/图片翻译演示视频.mp4" type="video/mp4" />
-                  </video>
-                  <div class="gallery-caption">
-                    <strong>图片翻译完整视频</strong>
-                    <span>更完整的交互流程与结果对比演示。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/悬浮窗屏幕翻译大模型全屏结果.jpg" alt="悬浮窗屏幕翻译大模型全屏结果截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>全屏翻译结果</strong>
-                    <span>适合阅读网页、说明页与长段文本的即时理解。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/悬浮窗屏幕翻译控制页.jpg" alt="悬浮窗屏幕翻译控制页截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>悬浮窗控制页</strong>
-                    <span>控制清晰，适合需要频繁开关与切换模式的场景。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/悬浮窗屏幕翻译框选区域.jpg" alt="悬浮窗屏幕翻译框选区域截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>框选区域翻译</strong>
-                    <span>针对局部信息处理更灵活，阅读打断更少。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/悬浮窗屏幕翻译普通引擎全屏结果.jpg" alt="普通引擎全屏翻译结果截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>普通引擎全屏结果</strong>
-                    <span>基础引擎也能在大面积屏幕翻译中保持速度优势。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/悬浮窗屏幕翻译自动翻译倒计时.jpg" alt="自动翻译倒计时截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>自动翻译倒计时</strong>
-                    <span>在连续阅读和轮询翻译场景中更省操作。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/悬浮窗设置页面.jpg" alt="悬浮窗设置页面截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>悬浮窗设置</strong>
-                    <span>参数可调，便于适配不同显示习惯与阅读偏好。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <video controls playsinline muted preload="metadata" poster="assets/showcase/悬浮窗屏幕翻译框选区域大模型结果.jpg">
-                    <source src="assets/showcase/悬浮窗文本翻译演示视频_batch.mp4" type="video/mp4" />
-                  </video>
-                  <div class="gallery-caption">
-                    <strong>悬浮窗文本翻译视频</strong>
-                    <span>展示屏幕翻译在真实网页内容中的使用方式。</span>
-                  </div>
-                </article>
-
-                <article class="card gallery-card">
-                  <img src="assets/showcase/长文翻译过程中.jpg" alt="长文翻译过程截图" loading="lazy" />
-                  <div class="gallery-caption">
-                    <strong>长文翻译处理中</strong>
-                    <span>适合展示整本级翻译流程与内容组织方式。</span>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </details>
-        </div>
-      </section>
-
-      <section class="section" id="download">
-        <div class="container">
-          <div class="download-banner">
-            <div>
-              <span class="eyebrow">下载与开始使用</span>
-              <h2>先下载，直接体验免费基础引擎；需要更深的 AI 能力时，再按需扩展。</h2>
-              <p>
-                从一次查词、一次截图翻译，或一次长文尝试开始，就能快速判断它是否适合你的学习、创作或专业工作流。
-              </p>
-              <div class="download-actions">
-                <a class="button button-primary"
-                  href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest"
-                  target="_blank" rel="noopener noreferrer">Android APK 下载</a>
-                <a class="button button-secondary"
-                  href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest&platform=desktop"
-                  target="_blank" rel="noopener noreferrer">Windows 桌面版</a>
-                <a class="button button-ghost"
-                  href="https://play.google.com/store/apps/details?id=com.funny.translation.google"
-                  target="_blank" rel="noopener noreferrer">Google Play</a>
-              </div>
-            </div>
-            <div class="download-card">
-              <strong>开始使用前的关键信息</strong>
-              <ul>
-                <li>基础引擎免费不限量，适合先体验核心流程。</li>
-                <li>开源仓库可查，技术用户可直接验证实现与安全边界。</li>
-                <li>会员月卡 ¥4.99，年卡 ¥49.99，图片翻译权益更高。</li>
-                <li>AI 点数独立购买，会员折扣更优，重度用户成本更可控。</li>
-                <li>支持 QQ 群反馈、Bilibili 展示与持续功能更新。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="faq">
-        <div class="container">
-          <div class="section-head">
-            <span class="eyebrow">常见问题</span>
-            <h2>把价格、免费额度、离线能力和适用人群解释清楚，用户才更容易做决定。</h2>
-            <p>把价格、免费额度、离线能力和适用人群说明清楚，选择会更直接，也更安心。</p>
-          </div>
-
-          <div class="faq-grid">
-            <details class="faq-item" open>
-              <summary>译站适合哪些人使用？</summary>
-              <p>适合学生、开发者、独立译者、跨境内容团队、漫画与视频爱好者，以及任何需要在多个翻译引擎和 AI 能力之间快速切换的人。</p>
-            </details>
-
-            <details class="faq-item">
-              <summary>非会员能免费用到什么程度？</summary>
-              <p>基础翻译引擎可免费不限量使用。图片翻译方面，非会员每月 30 张，会员每月 90 张。大模型相关能力采用 AI 点数按需购买。</p>
-            </details>
-
-            <details class="faq-item">
-              <summary>会员和 AI 点数是什么关系？</summary>
-              <p>会员不是替代 AI 点数，而是降低 AI 点数购买成本并提升部分权益。会员购买 AI 点数可享 9 折起、最高 8 折，更适合高频使用大模型的人。</p>
-            </details>
-
-            <details class="faq-item">
-              <summary>它支持离线和隐私敏感场景吗？</summary>
-              <p>支持。译站可接入本地运行的大模型进行翻译，在离线、隐私资料、敏感内容或网络不稳定时更有优势，也更容易被技术团队纳入内部流程。</p>
-            </details>
-
-            <details class="faq-item">
-              <summary>语音和图片功能和普通翻译工具有什么区别？</summary>
-              <p>图片翻译使用多模态模型理解复杂上下文，能处理手写、竖排古文、表格和复杂排版。语音翻译则将识别、大模型翻译、实时纠错和自然朗读串成一条完整链路。</p>
-            </details>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container footer-inner">
-        <div>
-          <strong>译站 Transtation</strong>
-          <p>
-            一站式翻译应用，支持多引擎同屏、AI 长文、图片、语音、漫画、悬浮窗与本地模型翻译。由 FunnySaltyFish 持续维护。
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container hero-container">
+        <div class="hero-copy">
+          <h1 class="display-title">把每一种翻译，<br>放进同一个工作台。</h1>
+          <p class="body-large text-muted">
+            基础引擎永久免费。一次输入，同屏对照多重结果。从一行代码、一张外语图片，到一本数万字的专业手册，让每一次跨语言阅读都准确、自然、不被打断。
           </p>
-          <p>如有 Bug、建议或合作需求，可加入 QQ 群：857362450。</p>
+          <div class="hero-cta">
+            <a href="#download" class="btn btn-warm">
+              免费下载体验
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="https://github.com/FunnySaltyFish/Transtation-KMP" class="btn btn-white" target="_blank">
+              查看开源代码
+            </a>
+          </div>
+          <div class="social-proof-micro">
+            <span class="tag">30,000+ 累计下载</span>
+            <span class="tag">40+ 翻译引擎接入</span>
+            <span class="tag">支持完全离线运行</span>
+          </div>
         </div>
-        <div class="footer-links">
-          <a href="https://github.com/FunnySaltyFish/Transtation-KMP" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://www.bilibili.com/video/BV1Dp4y1g7W1/" target="_blank" rel="noopener noreferrer">Bilibili</a>
-          <a href="https://jq.qq.com/?_wv=1027&k=qvZFdZ2k" target="_blank" rel="noopener noreferrer">QQ Group</a>
-          <a href="https://api.funnysaltyfish.fun/trans/v1/api/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
-          <a href="https://api.funnysaltyfish.fun/trans/v1/api/user_agreement" target="_blank" rel="noopener noreferrer">User Agreement</a>
-          <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">京ICP备2021034074号-1</a>
+
+        <div class="hero-media">
+          <div class="media-frame shadow-card">
+            <video autoplay loop muted playsinline poster="assets/showcase/长文翻译演示封面.png">
+              <source src="assets/showcase/主翻译结果演示视频_batch.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
-    </footer>
-  </div>
+    </section>
 
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "SoftwareApplication",
-          "name": "译站 Transtation",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Android, Windows",
-          "description": "译站 Transtation 是一款支持多引擎同屏翻译、AI 长文翻译、图片翻译、语音翻译、漫画翻译、悬浮窗翻译与本地离线模型的一站式翻译应用。",
-          "image": "assets/showcase/主页.jpg",
-          "offers": [
-            {
-              "@type": "Offer",
-              "name": "译站会员月卡",
-              "price": "4.99",
-              "priceCurrency": "CNY"
-            },
-            {
-              "@type": "Offer",
-              "name": "译站会员年卡",
-              "price": "49.99",
-              "priceCurrency": "CNY"
-            }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "译站适合哪些人使用？",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "译站适合学生、开发者、独立译者、跨境内容团队、漫画与视频爱好者，以及任何需要在多个翻译引擎和 AI 能力之间快速切换的人。"
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "非会员能免费用到什么程度？",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "基础翻译引擎可免费不限量使用。图片翻译方面，非会员每月 30 张，会员每月 90 张。大模型相关能力采用 AI 点数按需购买。"
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "会员和 AI 点数是什么关系？",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "会员可以提升图片翻译权益，并在购买 AI 点数时享受折扣。会员购买 AI 点数可享 9 折起、最高 8 折，更适合高频使用大模型的人。"
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "它支持离线和隐私敏感场景吗？",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "支持。译站可接入本地运行的大模型进行翻译，在离线、隐私资料、敏感内容或网络不稳定时更有优势。"
-              }
-            }
-          ]
-        }
-      ]
-    }
-  </script>
+    <!-- Features Bento Grid -->
+    <section id="features" class="section bg-light">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">不止于查词，而是完整的阅读流。</h2>
+          <p class="body-standard text-muted">所有的能力都是为了同一个目的：让你在当前场景下，用最少的操作得到最准确的意思。</p>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Feature 1 -->
+          <article class="card bento-large shadow-outline">
+            <div class="card-content">
+              <h3 class="card-title">多引擎与大模型同屏对照</h3>
+              <p class="body-standard text-muted">不要猜测，直接比较。Bing、Google 等基础引擎快速出词，20+ 顶级大模型提供专业润色，优劣一眼便知。</p>
+            </div>
+            <div class="card-media">
+              <img src="assets/showcase/大模型翻译结果列表.jpg" alt="多引擎同屏翻译" loading="lazy">
+            </div>
+          </article>
+
+          <!-- Feature 2 -->
+          <article class="card shadow-outline">
+            <div class="card-content">
+              <h3 class="card-title">悬浮窗实时翻译</h3>
+              <p class="body-standard text-muted">看网页、玩游戏无需切出。框选即译，直接贴合当前操作流。</p>
+            </div>
+            <div class="card-media">
+              <video autoplay loop muted playsinline poster="assets/showcase/悬浮窗屏幕翻译框选区域大模型结果.jpg">
+                <source src="assets/showcase/悬浮窗文本翻译演示视频_batch.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </article>
+
+          <!-- Feature 3 -->
+          <article class="card shadow-outline">
+            <div class="card-content">
+              <h3 class="card-title">整本文档与术语库</h3>
+              <p class="body-standard text-muted">长文翻译自动关联上下文，提取专业术语，保持全篇风格高度统一。</p>
+            </div>
+            <div class="card-media">
+              <video autoplay loop muted playsinline poster="assets/showcase/长文翻译演示封面.png">
+                <source src="assets/showcase/长文翻译翻译演示_batch.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scenarios Explorer (Interactive Gallery) -->
+    <section id="scenarios" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">处理复杂介质，举重若轻。</h2>
+          <p class="body-standard text-muted">无论是扫描件、竖排古文、未经整理的播客录音，还是未汉化的漫画，都能被优雅地解析、翻译并还原。</p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="card shadow-outline">
+            <video autoplay loop muted playsinline poster="assets/showcase/本地模型图片翻译演示.jpg">
+              <source src="assets/showcase/图片翻译演示视频_batch.mp4" type="video/mp4" />
+            </video>
+            <div class="card-footer">
+              <span class="caption">图片翻译与复杂版式还原</span>
+            </div>
+          </div>
+
+          <div class="card shadow-outline">
+            <video autoplay loop muted playsinline poster="assets/showcase/漫画翻译演示.jpg">
+              <source src="assets/showcase/漫画翻译效果演示视频_batch.mp4" type="video/mp4" />
+            </video>
+            <div class="card-footer">
+              <span class="caption">漫画一键翻译、嵌字与上色</span>
+            </div>
+          </div>
+
+          <div class="card shadow-outline">
+            <img src="assets/showcase/大模型古诗文翻译演示.jpg" alt="古诗文翻译" loading="lazy">
+            <div class="card-footer">
+              <span class="caption">高难度语境上下文理解</span>
+            </div>
+          </div>
+
+          <div class="card shadow-outline">
+            <video autoplay loop muted playsinline poster="assets/showcase/悬浮窗屏幕翻译控制页.jpg">
+              <source src="assets/showcase/实时语音翻译演示视频_batch.mp4" type="video/mp4" />
+            </video>
+            <div class="card-footer">
+              <span class="caption">语音识别、实时纠错与自然朗读</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section id="proof" class="section bg-light">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">被专业用户信任。</h2>
+        </div>
+        <div class="testimonial-grid">
+          <div class="card testimonial-card shadow-outline">
+            <p class="body-standard text-muted">"最有价值的不是模型数量，而是能在一个界面里快速对照多个结果。术语、语气、例句一眼就能判断，效率极高。"</p>
+            <div class="author">
+              <strong>本地化项目经理</strong>
+              <span class="micro text-muted">长期用户反馈</span>
+            </div>
+          </div>
+          <div class="card testimonial-card shadow-outline">
+            <p class="body-standard text-muted">"长文翻译能连续保留上下文，还能顺手整理术语表。做说明书和小说片段时，比传统复制粘贴式流程稳定很多。"</p>
+            <div class="author">
+              <strong>独立译者</strong>
+              <span class="micro text-muted">长文场景反馈</span>
+            </div>
+          </div>
+          <div class="card testimonial-card shadow-outline">
+            <p class="body-standard text-muted">"它支持本地大模型离线运行。在处理敏感的内部技术文档时，这是我们唯一敢放心使用的工具。"</p>
+            <div class="author">
+              <strong>软件开发工程师</strong>
+              <span class="micro text-muted">开源社区反馈</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing / Download -->
+    <section id="pricing" class="section">
+      <div class="container">
+        <div class="pricing-layout">
+          <div class="pricing-content">
+            <h2 class="section-title">先免费使用，再按需扩展。</h2>
+            <p class="body-standard text-muted">
+              我们希望你能在没有任何压力的情况下体验核心功能。基础引擎完全免费、不限量。当你需要重度使用大模型、批量处理图片时，再选择极具性价比的会员方案。
+            </p>
+            <ul class="benefit-list text-muted body-standard">
+              <li>基础翻译引擎永久免费。</li>
+              <li>非会员每月赠送 30 张高级图片翻译额度。</li>
+              <li>开源透明，支持本地离线部署运行。</li>
+              <li>会员享受 AI 点数最高 8 折优惠。</li>
+            </ul>
+          </div>
+
+          <div class="pricing-cards">
+            <div class="card shadow-outline">
+              <span class="tag">免费体验</span>
+              <div class="price">¥0<span class="small">/月</span></div>
+              <p class="caption text-muted">适合日常查词与轻度用户</p>
+              <a href="#download" class="btn btn-white full-width">立即下载</a>
+            </div>
+
+            <div class="card shadow-warm highlight">
+              <span class="tag-warm">专业年卡</span>
+              <div class="price">¥49.99<span class="small">/年</span></div>
+              <p class="caption text-muted">适合重度长文、图片及 AI 工作流</p>
+              <a href="#download" class="btn btn-warm full-width">获取应用</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer bg-light">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>Transtation</strong>
+        <p class="caption text-muted">由 FunnySaltyFish 持续维护。开源、透明、专注。</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/FunnySaltyFish/Transtation-KMP" class="caption text-muted">GitHub</a>
+        <a href="https://www.bilibili.com/video/BV1Dp4y1g7W1/" class="caption text-muted">Bilibili</a>
+        <a href="https://jq.qq.com/?_wv=1027&k=qvZFdZ2k" class="caption text-muted">QQ 群</a>
+        <a href="https://api.funnysaltyfish.fun/trans/v1/api/privacy" class="caption text-muted">隐私政策</a>
+      </div>
+    </div>
+  </footer>
   <script>
-    const navToggle = document.querySelector(".nav-toggle");
-    const navShell = document.querySelector(".nav-shell");
+    document.addEventListener('DOMContentLoaded', () => {
+      // Theme Toggle Logic
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const root = document.documentElement;
 
-    if (navToggle && navShell) {
-      navToggle.addEventListener("click", () => {
-        const isOpen = navShell.classList.toggle("open");
-        navToggle.setAttribute("aria-expanded", String(isOpen));
+      // Check system preference or saved preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        root.setAttribute('data-theme', savedTheme);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      }
+
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = root.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Optional: Switch icon logic based on theme
+        const icon = themeToggleBtn.querySelector('svg');
+        if (newTheme === 'dark') {
+          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        } else {
+          icon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+        }
       });
 
-      navShell.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          navShell.classList.remove("open");
-          navToggle.setAttribute("aria-expanded", "false");
+      // Language Toggle Placeholder
+      const langToggleBtn = document.getElementById('lang-toggle');
+      langToggleBtn.addEventListener('click', () => {
+        const currentLang = root.getAttribute('lang');
+        if (currentLang === 'zh-CN') {
+          root.setAttribute('lang', 'en');
+          langToggleBtn.textContent = 'ZH';
+          // Implement translation logic here
+        } else {
+          root.setAttribute('lang', 'zh-CN');
+          langToggleBtn.textContent = 'EN';
+        }
+      });
+
+      // Smooth Scroll for Anchor Links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80, // Offset for sticky header
+              behavior: 'smooth'
+            });
+          }
         });
       });
-    }
+    });
   </script>
 </body>
+
 </html>
