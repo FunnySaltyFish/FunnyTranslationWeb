@@ -485,6 +485,11 @@
       border-radius: 16px;
     }
 
+    .gallery-grid .video-trigger {
+      height: auto;
+      min-height: 0;
+    }
+
     .gallery-grid video,
     .gallery-grid img {
       width: 100%;
@@ -551,10 +556,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
+      align-items: stretch;
     }
 
     .pricing-cards .card {
       padding: 32px 24px;
+      gap: 18px;
+      min-height: 300px;
     }
 
     .pricing-cards .highlight {
@@ -567,7 +575,23 @@
       font-family: "HarmonyOS Sans SC", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
       font-weight: 500;
       letter-spacing: -0.05em;
-      margin: 16px 0 8px;
+      margin-top: 6px;
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+    }
+
+    .price .small {
+      letter-spacing: 0;
+      color: var(--text-muted);
+    }
+
+    .pricing-cards .caption {
+      margin-bottom: 18px;
+    }
+
+    .pricing-cards .btn {
+      margin-top: auto;
     }
 
     /* Download */
@@ -582,15 +606,34 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
+      align-items: stretch;
     }
 
     .download-card {
       padding: 32px 24px;
       gap: 18px;
+      min-height: 330px;
     }
 
-    .download-card .btn {
-      margin-top: 8px;
+    .download-card .tag-warm {
+      margin-bottom: 0;
+    }
+
+    .download-card .caption {
+      margin-bottom: 4px;
+    }
+
+    .download-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+      min-height: 136px;
+    }
+
+    .download-note {
+      padding-top: 2px;
+      line-height: 1.65;
     }
 
     /* Footer */
@@ -677,6 +720,10 @@
         grid-template-columns: 1fr;
       }
 
+      .bento-large {
+        grid-column: auto;
+      }
+
       .gallery-grid,
       .pricing-cards,
       .download-cards {
@@ -689,6 +736,29 @@
 
       .hero {
         padding: 80px 0 64px;
+      }
+
+      .card-content {
+        padding: 32px 24px;
+      }
+
+      .card-media {
+        min-height: 0;
+      }
+
+      .card-media img,
+      .card-media video,
+      .card-media .video-trigger img {
+        max-height: min(68vh, 520px);
+      }
+
+      .video-trigger {
+        height: auto;
+        min-height: 0;
+      }
+
+      .pricing-cards .highlight {
+        transform: none;
       }
 
       .footer-inner {
@@ -853,9 +923,12 @@
           </div>
 
           <div class="card shadow-outline">
-            <img src="assets/showcase/大模型古诗文翻译演示.jpg" alt="古诗文翻译" loading="lazy">
+            <button class="video-trigger" type="button" data-video="assets/showcase/主翻译结果演示视频_batch.mp4">
+              <img src="assets/showcase/大模型古诗文翻译演示.jpg" alt="按类型智能翻译文本预览">
+              <span class="play-pill">播放演示</span>
+            </button>
             <div class="card-footer">
-              <span class="caption">高难度语境上下文理解</span>
+              <span class="caption">按类型智能翻译文本</span>
             </div>
           </div>
 
@@ -954,23 +1027,33 @@
 
           <div class="download-cards">
             <div class="card download-card shadow-outline">
-              <span class="tag">Android APK</span>
+              <span class="tag">Android</span>
               <h3 class="card-title">移动端</h3>
-              <p class="caption text-muted">适合手机、平板和随时打开的跨语言阅读。</p>
-              <a class="btn btn-black full-width"
-                href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest">
-                下载 Android 版
-              </a>
+              <p class="caption text-muted">适合手机、平板和随时打开的跨语言阅读。国内版与 Google Play 版数据不互通，请按常用账号环境选择。</p>
+              <div class="download-actions">
+                <a class="btn btn-black full-width"
+                  href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest">
+                  下载国内 Android 版
+                </a>
+                <a class="btn btn-white full-width"
+                  href="https://play.google.com/store/apps/details?hl=zh&id=com.funny.translation.google"
+                  target="_blank" rel="noopener">
+                  Google Play 下载
+                </a>
+              </div>
             </div>
 
             <div class="card download-card shadow-warm">
               <span class="tag-warm">Windows Desktop</span>
               <h3 class="card-title">桌面端</h3>
               <p class="caption text-muted">适合长文、说明书、术语库与桌面翻译流程。</p>
-              <a class="btn btn-warm full-width"
-                href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest&platform=desktop">
-                下载 Windows 版
-              </a>
+              <div class="download-actions">
+                <a class="btn btn-warm full-width"
+                  href="https://api.funnysaltyfish.fun/trans/v1/app_update/get_apk?from_source=web_zh&file_name=latest&platform=desktop">
+                  下载 Windows 版
+                </a>
+                <p class="caption text-muted download-note">桌面端适合与移动端分工使用，下载入口直接获取最新版本。</p>
+              </div>
             </div>
           </div>
         </div>
@@ -1055,6 +1138,7 @@
         '图片翻译与复杂版式还原': 'Image translation and layout restoration',
         '漫画一键翻译、嵌字与上色': 'Comic translation, lettering, and coloring',
         '高难度语境上下文理解': 'High-context semantic understanding',
+        '按类型智能翻译文本': 'Smart text translation by type',
         '语音识别、实时纠错与自然朗读': 'Speech recognition, correction, and reading',
         '被专业用户信任。': 'Trusted by professional users.',
         '"最有价值的不是模型数量，而是能在一个界面里快速对照多个结果。术语、语气、例句一眼就能判断，效率极高。"': '"The real value is comparing multiple results in one interface. Terminology, tone, and examples are clear at a glance."',
@@ -1084,12 +1168,17 @@
         '官方下载': 'Official Download',
         '选择你的工作台。': 'Choose your workspace.',
         'Android 适合移动阅读、悬浮窗与图片翻译；Windows 桌面端适合长文、文档与高频工作流。两个入口都直接获取最新版。': 'Android is for mobile reading, floating-window translation, and image translation. Windows desktop is for long-form text, documents, and frequent workflows. Both links fetch the latest version directly.',
+        'Android': 'Android',
         '移动端': 'Mobile',
         '适合手机、平板和随时打开的跨语言阅读。': 'For phones, tablets, and always-available cross-language reading.',
+        '适合手机、平板和随时打开的跨语言阅读。国内版与 Google Play 版数据不互通，请按常用账号环境选择。': 'For phones, tablets, and always-available cross-language reading. The domestic Android build and Google Play build do not share account data, so choose the one that matches your usual account environment.',
         '下载 Android 版': 'Download Android',
+        '下载国内 Android 版': 'Download domestic Android',
+        'Google Play 下载': 'Get it on Google Play',
         '桌面端': 'Desktop',
         '适合长文、说明书、术语库与桌面翻译流程。': 'For long-form text, manuals, terminology, and desktop workflows.',
         '下载 Windows 版': 'Download Windows',
+        '桌面端适合与移动端分工使用，下载入口直接获取最新版本。': 'Desktop works well alongside mobile, and the download link fetches the latest version directly.',
         '由 FunnySaltyFish 持续维护。开源、透明、专注。': 'Maintained by FunnySaltyFish. Open, transparent, and focused.',
         'QQ 群': 'QQ Group',
         '隐私政策': 'Privacy',
